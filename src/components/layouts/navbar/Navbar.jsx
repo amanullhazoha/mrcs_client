@@ -81,7 +81,7 @@ const Navbar = () => {
               className="py-2 rounded-full w-full  px-4 mr-4  bg-gradient-to-r from-pink-500 to-indigo-400 text-[10px] lg:text-[14px] font-semibold text-white "
               onClick={() => setIsModalOpen(true)}
             >
-              Premium Subscription
+              Get Full Access
             </button>
           ) : (
             ""

@@ -1,8 +1,9 @@
 //External Import
-import React, { Fragment } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { Box, Breadcrumbs } from "@mui/material";
 import { Link, useLocation } from "react-router-dom";
 import { useQuery } from "react-query";
+import UserService from "../service/UserService";
 import { BsBoxSeamFill, BsFillPatchQuestionFill } from "react-icons/bs";
 
 //Internal Import
@@ -14,11 +15,30 @@ import { CommonProgress } from "../components/common/CommonProgress";
 
 const Quiz = () => {
   const location = useLocation();
+  const [userType, setUserType] = useState("");
+  const id = localStorage.getItem("userid");
   const category = new URLSearchParams(location.search).get("category");
 
   const { data, isLoading, isError } = useQuery(["myData", category], () =>
-    API.get(`/quiz/quizbycategory?category=${category}`).then((res) => res.data)
+    API.get(`/quiz/quizbycategory?category=${category}`).then(
+      (res) => res.data,
+    ),
   );
+
+  // Fetch User Data
+  useEffect(() => {
+    const getUserData = async () => {
+      try {
+        const res = await UserService.getSingleUser(id);
+        setUserType(res?.data?.usertype);
+      } catch (error) {
+        // Handle any error that might occur while fetching user data
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    getUserData(id);
+  }, [id]);
 
   return (
     <Fragment>
@@ -59,6 +79,9 @@ const Quiz = () => {
                     title2={"questions"}
                     link={`/questions?id=${item?.quiz_name}`}
                     key={item?._id}
+                    disabled={
+                      item?.accessibility === "paid" && userType === "unpaid"
+                    }
                   />
                 ))}
               </div>

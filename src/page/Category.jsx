@@ -81,8 +81,7 @@ const Category = () => {
               title2={"quizes"}
               image={item?.image}
               link={`/category/quiz?category=${item?.cat_name}`}
-              // disabled={item?.accessibility === "paid" && userType === "unpaid"}
-              disabled={true}
+              disabled={item?.accessibility === "paid" && userType === "unpaid"}
             />
           ))}
         </div>

@@ -17,6 +17,7 @@ const Dashboard = () => {
   const [slider, setSlider] = useState([]);
   const [study, setStudy] = useState([]);
   const [control, setControl] = useState([]);
+  const [userType, setUserType] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const id = localStorage.getItem("userid");
@@ -28,6 +29,8 @@ const Dashboard = () => {
 
         // Convert the string value to a boolean
         const modalShownFlag = localStorage.getItem("modalShown") === "true";
+
+        setUserType(res?.data?.usertype);
 
         if (res?.data?.usertype === "unpaid" && !modalShownFlag) {
           setIsModalOpen(true);
@@ -63,7 +66,7 @@ const Dashboard = () => {
       try {
         const response = await ControlService.getControl();
         const activeControl = response?.data?.filter(
-          (item) => item.status === "active"
+          (item) => item.status === "active",
         );
         setControl(activeControl);
       } catch (error) {
@@ -82,8 +85,8 @@ const Dashboard = () => {
     isError,
   } = useQuery("myData", () =>
     API.get("/category").then((res) =>
-      res.data.filter((item) => item.cat_status === "active")
-    )
+      res.data.filter((item) => item.cat_status === "active"),
+    ),
   );
 
   const closeModal = () => {
@@ -127,33 +130,29 @@ const Dashboard = () => {
                   </span>
                 )}
               </div>
-            ) : null
+            ) : null,
           )}
         </div>
 
-        <div className="xl:px-12  rounded-lg bg-white mb-8 border-2 xs:pb-5">
+        <div className="px-4 rounded-lg bg-white mb-8 border-2 xs:pb-5">
           <div className=" overflow-hidden h-full w-full">
-            <div className="flex-col lg:flex-row flex xs:flex-col lg:justify-between xs:justify-center justify-center items-center md:px-16 h-full w-full">
-              <div className="lg:w-[450px] lg:h-96 xs:w-[300px] w-full flex justify-center ml-28 sm:ml-12 xs:ml-12 h-[300px] lg:px-0 px-4 md:px-10  md:mb-10  py-5">
-                <img
-                  src={control ? control[0]?.image : hero}
-                  alt="hero"
-                  className="w-full h-full rounded-lg object-fit mt-4"
-                />
-              </div>
-              <div className="lg:w-1/2 xs:w-full w-full flex justify-center items-center ">
+            <div className="flex-col lg:flex-row flex xs:flex-col lg:justify-between xs:justify-center justify-center items-center h-full w-full">
+              <div className="lg:w-full xs:w-full w-full flex justify-center items-center ">
                 <div className="w-full flex flex-col h-full items-center text-center ">
-                  <span className="pt-5 px-5 lg:text-[30px] xs:text-[25px] md:text-[35px] sm:text-[30px] text-center pb-2 md:pb-5 font-sans font-bold inline-block bg-gradient-to-r from-purple-400 to-emerald-700 text-transparent bg-clip-text">
+                  <span className="pt-5 lg:text-[30px] xs:text-[25px] md:text-[35px] sm:text-[30px] text-center pb-2 md:pb-5 font-sans font-bold inline-block bg-gradient-to-r from-purple-400 to-emerald-700 text-transparent bg-clip-text">
                     {control
                       ? control[0]?.title
                       : "Making Your MRCS Journey Easiest"}
                   </span>
-                  <span className="text-center pt-4 px-5 lg:text-[25px] xs:text-[20px] text-[30px]   xs:pl-0 md:pl-8 items-center font-sans font-semibold inline-block bg-gradient-to-r from-emerald-500 to-[#4D317D] text-transparent bg-clip-text">
+
+                  <span className="text-center pt-4 lg:text-[25px] xs:text-[20px] text-[30px] xs:pl-0 items-center font-sans font-semibold inline-block bg-clip-text text-[#363431]">
                     {control
                       ? control[0]?.subtitle
                       : "If you never try, You will never win"}
                   </span>
+
                   <br />
+
                   <Link to="/studyplan">
                     <button className="py-3 rounded-full px-16  bg-gradient-to-r from-emerald-500 to-indigo-400 text-lg font-bold text-white ">
                       {control[0]?.buttonName}
@@ -194,6 +193,31 @@ const Dashboard = () => {
           ))}
         </div>
 
+        <div className="w-full  mt-10 flex justify-between ">
+          <span className="lg:text-xl xs:text-lg md:text-lg font-medium font-sans text-emerald-600 ">
+            ⭐ Recall Questions
+          </span>
+          <Link to="/allquiz">
+            <CommonButton color="secondary" width={120} height={40}>
+              View More
+            </CommonButton>
+          </Link>
+        </div>
+
+        <div className="grid lg:grid-cols-5 gap-6 md:grid-cols-2 sm:grid-cols-2 xs:grid-cols-2 mt-3">
+          {popularquiz?.slice(0, 8).map((item) => (
+            <Card
+              number={""}
+              key={item._id}
+              title2={"quizes"}
+              image={item?.image}
+              title={item?.cat_name}
+              link={`/category/quiz?category=${item?.cat_name}`}
+              disabled={item?.accessibility === "paid" && userType === "unpaid"}
+            />
+          ))}
+        </div>
+
         {/* popular quiz category */}
         <div className="w-full  mt-10 flex justify-between ">
           <span className="lg:text-xl xs:text-lg md:text-lg font-medium font-sans text-emerald-600 ">
@@ -205,15 +229,17 @@ const Dashboard = () => {
             </CommonButton>
           </Link>
         </div>
+
         <div className="grid lg:grid-cols-5 gap-6 md:grid-cols-2 sm:grid-cols-2 xs:grid-cols-2 mt-3">
           {popularquiz?.slice(0, 8).map((item) => (
             <Card
-              title={item?.cat_name}
               number={""}
-              image={item?.image}
-              title2={"quizes"}
-              link={`/category/quiz?category=${item?.cat_name}`}
               key={item._id}
+              title2={"quizes"}
+              image={item?.image}
+              title={item?.cat_name}
+              link={`/category/quiz?category=${item?.cat_name}`}
+              disabled={item?.accessibility === "paid" && userType === "unpaid"}
             />
           ))}
         </div>

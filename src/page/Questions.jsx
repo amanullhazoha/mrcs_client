@@ -33,6 +33,7 @@ const Questions = () => {
   const [open, setOpen] = useState(false);
   const userid = localStorage.getItem("userid");
   const username = localStorage.getItem("username");
+  const saveQuestions = localStorage.getItem("questions");
 
   function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -47,23 +48,35 @@ const Questions = () => {
   const handleValueChange = (questionId, selectedValue) => {
     setItems((prevItems) => {
       const existingItemIndex = prevItems.findIndex(
-        (item) => item.question_id === questionId
+        (item) => item.question_id === questionId,
       );
 
       if (existingItemIndex !== -1) {
         const updatedItems = [...prevItems];
         updatedItems[existingItemIndex].selected_value = selectedValue;
+
+        localStorage.setItem("questions", JSON.stringify(updatedItems));
         return updatedItems;
       } else {
         const question = questions.find(
-          (question) => question._id === questionId
+          (question) => question._id === questionId,
         );
-        if (!question) return prevItems;
+        if (!question) {
+          localStorage.setItem("questions", JSON.stringify(prevItems));
+
+          return prevItems;
+        }
 
         const newItem = {
           question_id: questionId,
           selected_value: selectedValue,
         };
+
+        localStorage.setItem(
+          "questions",
+          JSON.stringify([...prevItems, newItem]),
+        );
+
         return [...prevItems, newItem];
       }
     });
@@ -82,14 +95,14 @@ const Questions = () => {
       const allQuestionsAnswered = questions.every((question) =>
         items.some(
           (item) =>
-            item?.question_id === question._id && item?.selected_value !== ""
-        )
+            item?.question_id === question._id && item?.selected_value !== "",
+        ),
       );
 
       if (!allQuestionsAnswered) {
         // You can show an error message or highlight the unanswered questions
         alert(
-          "Please make sure fill-up every question answer, otherwise you can't Submit"
+          "Please make sure fill-up every question answer, otherwise you can't Submit",
         );
         setIsLoading(false);
         return;
@@ -99,6 +112,8 @@ const Questions = () => {
           setQid(response?.data?.resultdata?._id);
           setOpen(true);
           setIsLoading(false);
+
+          localStorage.removeItem("questions");
         } else {
           console.log("Something went wrong");
         }
@@ -107,6 +122,13 @@ const Questions = () => {
       console.log("Error", err);
     }
   };
+
+  useEffect(() => {
+    if (saveQuestions) {
+      console.log(saveQuestions);
+      setItems(JSON.parse(saveQuestions));
+    }
+  }, []);
 
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -196,7 +218,7 @@ const Questions = () => {
                           name={`question_${question._id}`}
                           value={
                             items?.find(
-                              (item) => item.question_id === question._id
+                              (item) => item.question_id === question._id,
                             )?.selected_value || ""
                           }
                           onChange={(e) =>
@@ -213,7 +235,7 @@ const Questions = () => {
                                     items?.find(
                                       (item) =>
                                         item?.question_id === question._id &&
-                                        item?.selected_value === key
+                                        item?.selected_value === key,
                                     )
                                       ? "bg-green-50"
                                       : ""

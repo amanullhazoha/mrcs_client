@@ -41,7 +41,6 @@ const Signup = () => {
       .catch((err) => {
         setIsLoading(false);
         toast.error("Something is Wrong,");
-       
       });
   };
 
@@ -432,7 +431,7 @@ const Signup = () => {
                       <div className="py-2">
                         <Link to="/login">
                           <span className="font-medium text-yellow-600 hover:text-yellow-700">
-                            {"Have an account? Please login here !"}
+                            {"Have an account? Please login here!"}
                           </span>
                         </Link>
                       </div>
