@@ -99,24 +99,35 @@ const Questions = () => {
         ),
       );
 
-      if (!allQuestionsAnswered) {
-        // You can show an error message or highlight the unanswered questions
-        alert(
-          "Please make sure fill-up every question answer, otherwise you can't Submit",
-        );
-        setIsLoading(false);
-        return;
-      } else {
-        const response = await QuestionService.addResult(payload);
-        if (response.status === 200) {
-          setQid(response?.data?.resultdata?._id);
-          setOpen(true);
-          setIsLoading(false);
+      // if (!allQuestionsAnswered) {
+      //   // You can show an error message or highlight the unanswered questions
+      //   alert(
+      //     "Please make sure fill-up every question answer, otherwise you can't Submit",
+      //   );
+      //   setIsLoading(false);
+      //   return;
+      // } else {
+      //   const response = await QuestionService.addResult(payload);
+      //   if (response.status === 200) {
+      //     setQid(response?.data?.resultdata?._id);
+      //     setOpen(true);
+      //     setIsLoading(false);
 
-          localStorage.removeItem("questions");
-        } else {
-          console.log("Something went wrong");
-        }
+      //     localStorage.removeItem("questions");
+      //   } else {
+      //     console.log("Something went wrong");
+      //   }
+      // }
+
+      const response = await QuestionService.addResult(payload);
+      if (response.status === 200) {
+        setQid(response?.data?.resultdata?._id);
+        setOpen(true);
+        setIsLoading(false);
+
+        localStorage.removeItem("questions");
+      } else {
+        console.log("Something went wrong");
       }
     } catch (err) {
       console.log("Error", err);
@@ -135,8 +146,8 @@ const Questions = () => {
       setIsLoading2(true);
       try {
         const response = await API.get(`/questions/questionbyquiz?quiz=${id}`);
-        const shuffledArray = shuffleArray([...response.data]);
-        setQuestions(shuffledArray);
+        // const shuffledArray = shuffleArray([...response.data]);
+        setQuestions([...response.data]);
         setIsLoading2(false);
       } catch (error) {
         console.error("Error fetching questions:", error);
