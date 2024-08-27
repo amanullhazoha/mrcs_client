@@ -4,6 +4,8 @@ import MainLayout from "./components/layouts/MainLayout";
 import { CommonProgress } from "./components/common/CommonProgress";
 import ProtectedRoute from "./components/protected/ProtectedRoute";
 import ExamSchedule from "./page/ExamSchedule";
+import Faq from "./page/FAQ";
+import ContactUs from "./page/ContactUs";
 
 const User = lazy(() => import("./page/User"));
 const Dashboard = lazy(() => import("./page/Dashboard"));
@@ -215,6 +217,29 @@ const App = () => {
           </MainLayout>
         }
       />
+
+      <Route
+        path="/faq"
+        element={
+          <MainLayout>
+            <Suspense fallback={<CommonProgress />}>
+              <Faq />
+            </Suspense>
+          </MainLayout>
+        }
+      />
+
+      <Route
+        path="/contact-us"
+        element={
+          <MainLayout>
+            <Suspense fallback={<CommonProgress />}>
+              <ContactUs />
+            </Suspense>
+          </MainLayout>
+        }
+      />
+
       // ForgotPassword & Reset Password
       <Route
         path="/forgotpassword"

@@ -163,9 +163,20 @@ const Sidebar = () => {
               </NavLink>
             </li>
 
-           
+            <li>
+              <NavLink to={"/faq"} className="link text-green-400">
+                < BsPassFill size={23} className="min-w-max text-green-400 " />
+                FAQ
+              </NavLink>
+            </li>
 
-            
+            <li>
+              <NavLink to={"/contact-us"} className="link text-green-400">
+                < BsPassFill size={23} className="min-w-max text-green-400 " />
+                Contact Us
+              </NavLink>
+            </li>
+
           </ul>
         </div>
         {/* <motion.div
