@@ -2,6 +2,7 @@ import React, { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import "./index.css";
+import '@smastrom/react-rating/style.css'
 
 import MenuContextProvider from "./context/MenuContext";
 import { ToastContainer } from "react-toastify";

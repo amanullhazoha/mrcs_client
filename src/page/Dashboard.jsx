@@ -12,6 +12,8 @@ import { hero } from "../assets";
 import UserService from "../service/UserService";
 import PopupModal from "../components/common/PopupModal";
 import ControlService from "../service/ControlService";
+import ReviewCard from "../components/common/ReviewCard";
+import ReviewModal from "../components/common/ReviewModal";
 
 const Dashboard = () => {
   const [slider, setSlider] = useState([]);
@@ -19,6 +21,7 @@ const Dashboard = () => {
   const [control, setControl] = useState([]);
   const [userType, setUserType] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isReviewOpen, setIsReviewOpen] = useState(false);
 
   const id = localStorage.getItem("userid");
 
@@ -244,8 +247,39 @@ const Dashboard = () => {
           ))}
         </div>
 
+        {/* popular quiz category */}
+        <div className="w-full  mt-10 flex justify-between ">
+          <span className="lg:text-xl xs:text-lg md:text-lg font-medium font-sans text-emerald-600 ">
+            ⭐Reviews
+          </span>
+
+          <button type="button" onClick={() => setIsReviewOpen(true)}>
+            <CommonButton color="secondary" width={140} height={40}>
+              Add Review
+            </CommonButton>
+          </button>
+        </div>
+
+        <div className="grid lg:grid-cols-2 gap-6 md:grid-cols-2 sm:grid-cols-1 xs:grid-cols-1 mt-3">
+          {popularquiz?.slice(0, 8).map((item) => (
+            <ReviewCard
+              number={""}
+              key={item._id}
+              title2={"quizes"}
+              image={item?.image}
+              title={item?.cat_name}
+              link={`/category/quiz?category=${item?.cat_name}`}
+              disabled={item?.accessibility === "paid" && userType === "unpaid"}
+            />
+          ))}
+        </div>
+
         {isModalOpen && (
           <PopupModal isOpen={isModalOpen} onClose={closeModal} />
+        )}
+
+        {isReviewOpen && (
+          <ReviewModal isOpen={isReviewOpen} onClose={() => setIsReviewOpen(false)} />
         )}
       </div>
     </Fragment>

@@ -1,18 +1,13 @@
-import { BsBookFill } from "react-icons/bs";
+import React, { Fragment } from "react";
+import { Formik, Form, Field } from "formik";
 import ContactUsService from "../service/ContactUsService";
-import { Link, useParams } from "react-router-dom";
-import React, { Fragment, useEffect, useState } from "react";
 import { Box, Breadcrumbs, Typography } from "@mui/material";
 import PackageBreadcrumb from "../components/common/PackageBreadcrumb";
-import { Formik, Form, Field } from "formik";
+import contactUsValidationSchema from "../utils/validation/contactUsValidation";
 
 const ContactUs = () => {
-    const [isLoading, setIsLoading] = useState(false);
-
     const handleSubmit = async (values, { setSubmitting, resetForm }) => {
         try {
-          setIsLoading(true);
-    
           const response = await ContactUsService.sendContactMessage(values);
     
           if (response.status === 201) {
@@ -28,10 +23,9 @@ const ContactUs = () => {
           console.log("Error while sending message: ", error);
           toast.error("Something went wrong while sending the message");
         } finally {
-          setIsLoading(false);
           setSubmitting(false);
         }
-      };
+    };
 
   return (
     <Fragment>
@@ -47,90 +41,137 @@ const ContactUs = () => {
                 <Formik
                     initialValues={{
                         email: "",
-                        phone: "",
+                        phone: null,
                         subject: "",
                         message: "",
                         full_name: "",
                     }}
                     onSubmit={handleSubmit}
+                    validationSchema={contactUsValidationSchema}
                 >
                     {({
                         values,
+                        errors, 
+                        touched, 
                         isSubmitting,
                         setFieldValue,
                     }) => (
-                    <Form className="w-full grid grid-cols-2 gap-5">
-                        <div className="mb-4 pt-2 w-full">
+                    <Form className="grid md:grid-cols-2 gap-5">
+                        <div className="mb-4 pt-2 w-full max-sm:col-span-2">
                             <label
                             htmlFor="question_name"
                             className="block text-gray-800  font-md mb-2"
                             >
-                            Full Name :
+                            Full Name:
                             </label>
 
                             <Field
                             type="text"
                             name="full_name"
-                            placeholder="Enter full_name"
-                            className={`appearance-none block w-full px-3 py-4 border border-gray-300 
-                                rounded-md shadow-sm placeholder-gray-400 focus:ring-green-500
-                            focus:border-green-500 focus:ring-1 sm:text-sm`}
+                            placeholder="Enter full name"
+                            error={touched.full_name && errors.full_name}
+                            className={`appearance-none block w-full px-3 py-2 border border-gray-300 
+                                      rounded-md shadow-sm placeholder-gray-400 
+                                      focus:ring-green-500 focus:border-green-500 focus:ring-1 sm:text-sm ${
+                                        touched.full_name && errors.full_name
+                                          ? "border-red-500"
+                                          : ""
+                                      }`}
                             />
+
+                          {touched.full_name && errors.full_name && (
+                            <p className="mt-2 text-sm text-red-600 ">
+                              {errors.full_name}
+                            </p>
+                          )}
                         </div>  
 
-                        <div className="mb-4 pt-2 w-full">
+                        <div className="mb-4 pt-2 w-full  max-sm:col-span-2">
                             <label
                             htmlFor="question_name"
                             className="block text-gray-800  font-md mb-2"
                             >
-                            Email :
+                            Email:
                             </label>
 
                             <Field
                             type="email"
                             name="email"
                             placeholder="Enter your email"
-                            className={`appearance-none block w-full px-3 py-4 border border-gray-300 
-                                rounded-md shadow-sm placeholder-gray-400 focus:ring-green-500
-                            focus:border-green-500 focus:ring-1 sm:text-sm`}
+                            error={touched.email && errors.email}
+                            className={`appearance-none block w-full px-3 py-2 border border-gray-300 
+                                      rounded-md shadow-sm placeholder-gray-400 
+                                      focus:ring-green-500 focus:border-green-500 focus:ring-1 sm:text-sm ${
+                                        touched.email && errors.email
+                                          ? "border-red-500"
+                                          : ""
+                                      }`}
                             />
+
+                            {touched.email && errors.email && (
+                              <p className="mt-2 text-sm text-red-600 ">
+                                {errors.email}
+                              </p>
+                            )}
                         </div> 
 
-                        <div className="mb-4 pt-2 w-full">
+                        <div className="mb-4 pt-2 w-full  max-sm:col-span-2">
                             <label
                             htmlFor="question_name"
                             className="block text-gray-800  font-md mb-2"
                             >
-                            Phone :
+                            Phone:
                             </label>
 
                             <Field
-                            type="text"
                             name="phone"
+                            type="number"
                             placeholder="Enter your phone number"
-                            className={`appearance-none block w-full px-3 py-4 border border-gray-300 
-                                rounded-md shadow-sm placeholder-gray-400 focus:ring-green-500
-                            focus:border-green-500 focus:ring-1 sm:text-sm`}
+                            error={touched.phone && errors.phone}
+                            className={`appearance-none block w-full px-3 py-2 border border-gray-300 
+                                      rounded-md shadow-sm placeholder-gray-400 
+                                      focus:ring-green-500 focus:border-green-500 focus:ring-1 sm:text-sm ${
+                                        touched.phone && errors.phone
+                                          ? "border-red-500"
+                                          : ""
+                                      }`}
                             />
+
+                            {touched.phone && errors.phone && (
+                              <p className="mt-2 text-sm text-red-600 ">
+                                {errors.phone}
+                              </p>
+                            )}
                         </div> 
 
 
-                        <div className="mb-4 pt-2 w-full">
+                        <div className="mb-4 pt-2 w-full  max-sm:col-span-2">
                             <label
                             htmlFor="question_name"
                             className="block text-gray-800  font-md mb-2"
                             >
-                            Subject :
+                            Subject:
                             </label>
 
                             <Field
                             type="text"
                             name="subject"
                             placeholder="Enter your contact subject"
-                            className={`appearance-none block w-full px-3 py-4 border border-gray-300 
-                                rounded-md shadow-sm placeholder-gray-400 focus:ring-green-500
-                            focus:border-green-500 focus:ring-1 sm:text-sm`}
+                            error={touched.subject && errors.subject}
+                            className={`appearance-none block w-full px-3 py-2 border border-gray-300 
+                                      rounded-md shadow-sm placeholder-gray-400 
+                                      focus:ring-green-500 focus:border-green-500 focus:ring-1 sm:text-sm ${
+                                        touched.subject && errors.subject
+                                          ? "border-red-500"
+                                          : ""
+                                      }`}
                             />
+
+                            {touched.subject && errors.subject && (
+                              <p className="mt-2 text-sm text-red-600 ">
+                                {errors.subject}
+                              </p>
+                            )}
                         </div> 
 
                         <div className="mb-4 pt-2 w-full col-span-2">
@@ -138,7 +179,7 @@ const ContactUs = () => {
                             htmlFor="question_name"
                             className="block text-gray-800  font-md mb-2"
                             >
-                            Message :
+                            Message:
                             </label>
 
                             <textarea 
@@ -146,10 +187,20 @@ const ContactUs = () => {
                                 name="message" rows="4" cols="50"
                                 placeholder="Enter your contact subject"
                                 onChange={(e) => setFieldValue("message", e.target.value)}
-                                className={`appearance-none block w-full px-3 py-4 border border-gray-300 
-                                rounded-md shadow-sm placeholder-gray-400 focus:ring-green-500
-                              focus:border-green-500 focus:ring-1 sm:text-sm`}
+                                className={`appearance-none block w-full px-3 py-2 border border-gray-300 
+                                rounded-md shadow-sm placeholder-gray-400 
+                                focus:ring-green-500 focus:border-green-500 focus:ring-1 sm:text-sm ${
+                                  touched.message && errors.message
+                                    ? "border-red-500"
+                                    : ""
+                                }`}
                             />
+
+                            {touched.message && errors.message && (
+                              <p className="mt-2 text-sm text-red-600 ">
+                                {errors.message}
+                              </p>
+                            )}
                         </div> 
 
                         <button
