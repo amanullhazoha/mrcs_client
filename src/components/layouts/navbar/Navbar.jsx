@@ -1,4 +1,3 @@
-//Externals import ...............
 import { Popover, List, ListItem } from "@mui/material";
 import React, { useContext, useState, useEffect } from "react";
 import { FiUser } from "react-icons/fi";
@@ -41,6 +40,7 @@ const Navbar = () => {
     const getUserData = async () => {
       try {
         const res = await UserService.getSingleUser(id);
+
         setUsertype(res?.data);
       } catch (error) {
         // Handle any error that might occur while fetching user data
@@ -48,11 +48,14 @@ const Navbar = () => {
       }
     };
     getUserData(id);
-  }, [id]);
+  }, [token]);
 
   const closeModal = () => {
     setIsModalOpen(false);
   };
+
+  console.log(usertype);
+  console.log("hi")
 
   return (
     <nav
@@ -88,7 +91,7 @@ const Navbar = () => {
           )}
 
           {/* Profile Button */}
-          {token ? (
+          {usertype ? (
             <div
               className="flex items-center justify-center   rounded-full text-white shadow-md hover:shadow-lg hover:shadow-emerald-600 hover:text-indigo-50 transition duration-150 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-green-100 focus:ring-green-500"
               onClick={handleUserClick}

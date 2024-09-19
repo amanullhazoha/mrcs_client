@@ -3,8 +3,12 @@ import { API, FAPI } from "../config/axiosConfig"
 
 
 
+// const getSingleUser = (id)=>{
+//   return API.get(`/users/${id}`)
+// }
+
 const getSingleUser = (id)=>{
-  return API.get(`/users/${id}`)
+  return API.get(`/users/profile`)
 }
 
 const UploadImage = (id,values)=>{

@@ -5,7 +5,7 @@ const getReviews = (id)=>{
 }
 
 const addReview = (values)=>{
-  return FAPI.put(`/reviews/add`,values);
+  return API.post(`/reviews/add`, values);
 }
 
 const ReviewService = { 

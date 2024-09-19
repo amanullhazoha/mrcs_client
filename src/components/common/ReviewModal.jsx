@@ -1,6 +1,7 @@
 import Box from "@mui/material/Box";
 import { Formik, Form } from "formik";
 import Modal from "@mui/material/Modal";
+import { toast } from "react-toastify";
 import { MdClose } from "react-icons/md";
 import { Rating } from "@smastrom/react-rating";
 import ReviewService from "../../service/ReviewService";
@@ -8,13 +9,16 @@ import ReviewService from "../../service/ReviewService";
 function ReviewModal({ isOpen, onClose }) {
     const handleSubmit = async (values, { setSubmitting, resetForm }) => {
         try {
+            console.log(values)
           const response = await ReviewService.addReview(values);
     
           if (response.status === 201) {
             resetForm()
+            onClose();
             toast.success("Review add successfully");
           } else if (response.status === 200) {
             resetForm()
+            onClose();
             toast.success("Review add successfully");
           } else {
             toast.error("Something went wrong while sending the message");

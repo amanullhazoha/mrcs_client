@@ -40,6 +40,7 @@ const App = () => {
           </MainLayout>
         }
       />
+      
       <Route
         path="/studyplan"
         element={

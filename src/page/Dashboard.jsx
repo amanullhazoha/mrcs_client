@@ -92,6 +92,14 @@ const Dashboard = () => {
     ),
   );
 
+  const {
+    data: reviews,
+    isReviewLoading,
+    isReviewError,
+  } = useQuery("myReview", () =>
+    API.get("/reviews/show").then((res) => res.data),
+  );
+
   const closeModal = () => {
     setIsModalOpen(false);
     localStorage.setItem("modalShown", "true");
@@ -107,6 +115,9 @@ const Dashboard = () => {
   if (isError) {
     return <div>Error fetching data </div>;
   }
+
+  console.log(reviews);
+
   return (
     <Fragment>
       <div className="xl:px-12 xs:px-0 lg:px-10">
@@ -184,6 +195,7 @@ const Dashboard = () => {
             </CommonButton>
           </Link>
         </div>
+        
         <div className="grid lg:grid-cols-5 gap-6 md:grid-cols-2 sm:grid-cols-2 xs:grid-cols-2 mt-3 w-full items-center mx-auto">
           {study?.slice(0, 8).map((study, i) => (
             <Card
@@ -253,23 +265,22 @@ const Dashboard = () => {
             ⭐Reviews
           </span>
 
-          <button type="button" onClick={() => setIsReviewOpen(true)}>
-            <CommonButton color="secondary" width={140} height={40}>
-              Add Review
-            </CommonButton>
-          </button>
+          {userType === "paid" && (
+            <button type="button" onClick={() => setIsReviewOpen(true)}>
+              <CommonButton color="secondary" width={140} height={40}>
+                Add Review
+              </CommonButton>
+            </button>
+          )}
         </div>
 
         <div className="grid lg:grid-cols-2 gap-6 md:grid-cols-2 sm:grid-cols-1 xs:grid-cols-1 mt-3">
-          {popularquiz?.slice(0, 8).map((item) => (
+          {reviews?.map((item) => (
             <ReviewCard
-              number={""}
-              key={item._id}
-              title2={"quizes"}
-              image={item?.image}
-              title={item?.cat_name}
-              link={`/category/quiz?category=${item?.cat_name}`}
-              disabled={item?.accessibility === "paid" && userType === "unpaid"}
+              review={item?.review}
+              rating={item?.rating}
+              user_name={item?.user_name}
+              image={item?.user_profile_image}
             />
           ))}
         </div>
