@@ -4,13 +4,18 @@ const getReviews = (id)=>{
   return API.get(`/reviews`)
 }
 
+const getLoggedInUserReview = ()=>{
+  return API.get(`/reviews/logged-in-user`);
+}
+
 const addReview = (values)=>{
   return API.post(`/reviews/add`, values);
 }
 
 const ReviewService = { 
-  getReviews,
   addReview,
+  getReviews,
+  getLoggedInUserReview
 };
 
 export default ReviewService;

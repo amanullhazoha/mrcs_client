@@ -96,8 +96,16 @@ const Dashboard = () => {
     data: reviews,
     isReviewLoading,
     isReviewError,
-  } = useQuery("myReview", () =>
+  } = useQuery("reviews", () =>
     API.get("/reviews/show").then((res) => res.data),
+  );
+
+  const {
+    data: loginUserReview,
+    isLoginUserReviewLoading,
+    isLoginUserReview,
+  } = useQuery("myReview", () =>
+    API.get("/reviews/logged-in-user").then((res) => res.data),
   );
 
   const closeModal = () => {
@@ -112,11 +120,10 @@ const Dashboard = () => {
       </div>
     );
   }
+
   if (isError) {
     return <div>Error fetching data </div>;
   }
-
-  console.log(reviews);
 
   return (
     <Fragment>
@@ -265,7 +272,7 @@ const Dashboard = () => {
             ⭐Reviews
           </span>
 
-          {userType === "paid" && (
+          {userType === "paid" && !loginUserReview && (
             <button type="button" onClick={() => setIsReviewOpen(true)}>
               <CommonButton color="secondary" width={140} height={40}>
                 Add Review

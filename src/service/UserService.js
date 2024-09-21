@@ -7,15 +7,16 @@ import { API, FAPI } from "../config/axiosConfig"
 //   return API.get(`/users/${id}`)
 // }
 
-const getSingleUser = (id)=>{
+const getSingleUser = ()=>{
   return API.get(`/users/profile`)
 }
 
 const UploadImage = (id,values)=>{
-  return FAPI.put(`/users/update/${id}`,values);
+  return FAPI.put(`/users/profile/update`,values);
 }
+
 const updateUser = (id,values)=>{
-  return API.put(`/users/update/${id}`,values);
+  return API.put(`/users/profile/update`,values);
 }
 
 const getSubscription = ()=>{
