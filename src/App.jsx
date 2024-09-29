@@ -6,6 +6,8 @@ import ProtectedRoute from "./components/protected/ProtectedRoute";
 import ExamSchedule from "./page/ExamSchedule";
 import Faq from "./page/FAQ";
 import ContactUs from "./page/ContactUs";
+import RecallDetail from "./page/RecallDetail";
+import RecallCategory from "./page/RecallCategory";
 
 const User = lazy(() => import("./page/User"));
 const Dashboard = lazy(() => import("./page/Dashboard"));
@@ -14,7 +16,9 @@ const Category = lazy(() => import("./page/Category"));
 const Signin = lazy(() => import("./page/Signin"));
 
 const AllQuiz = lazy(() => import("./page/AllQuiz"));
+const AllRecall = lazy(() => import("./page/AllRecall"));
 const Quiz = lazy(() => import("./page/Quiz"));
+const Recall = lazy(() => import("./page/Recall"));
 const Results = lazy(() => import("./page/Results"));
 const Study = lazy(() => import("./page/Study"));
 const Questions = lazy(() => import("./page/Questions"));
@@ -113,6 +117,64 @@ const App = () => {
           </MainLayout>
         }
       />
+      <Route
+        path="/recall-category"
+        element={
+          <MainLayout>
+            <Suspense fallback={<CommonProgress />}>
+              <RecallCategory />
+            </Suspense>
+          </MainLayout>
+        }
+      />
+      <Route
+        path="/recall-category/recall"
+        element={
+          <MainLayout>
+            <Suspense fallback={<CommonProgress />}>
+              <Recall />
+            </Suspense>
+          </MainLayout>
+        }
+      />
+
+      {/* recall */}
+      <Route
+        path="/all-recall-question"
+        element={
+          <MainLayout>
+            <Suspense fallback={<CommonProgress />}>
+              <AllRecall />
+            </Suspense>
+          </MainLayout>
+        }
+      />
+
+      <Route
+        path="/recalls"
+        element={
+          <ProtectedRoute>
+            <MainLayout>
+              <Suspense fallback={<CommonProgress />}>
+                <Questions />
+              </Suspense>
+            </MainLayout>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/recall-detail"
+        element={
+          <ProtectedRoute>
+            <MainLayout>
+              <Suspense fallback={<CommonProgress />}>
+                <RecallDetail />
+              </Suspense>
+            </MainLayout>
+          </ProtectedRoute>
+        }
+      />
+
       {/* Quiz */}
       <Route
         path="/allquiz"

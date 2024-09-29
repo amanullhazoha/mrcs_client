@@ -14,6 +14,7 @@ import PopupModal from "../components/common/PopupModal";
 import ControlService from "../service/ControlService";
 import ReviewCard from "../components/common/ReviewCard";
 import ReviewModal from "../components/common/ReviewModal";
+import ReviewCarousel from "../components/common/ReviewCarousel";
 
 const Dashboard = () => {
   const [slider, setSlider] = useState([]);
@@ -88,6 +89,16 @@ const Dashboard = () => {
     isError,
   } = useQuery("myData", () =>
     API.get("/category").then((res) =>
+      res.data.filter((item) => item.cat_status === "active"),
+    ),
+  );
+
+  const {
+    data: recallCategories,
+    isLoading: recallLoading,
+    isError: isRecallError,
+  } = useQuery("recall_categories", () =>
+    API.get("/recall-category").then((res) =>
       res.data.filter((item) => item.cat_status === "active"),
     ),
   );
@@ -219,7 +230,7 @@ const Dashboard = () => {
           <span className="lg:text-xl xs:text-lg md:text-lg font-medium font-sans text-emerald-600 ">
             ⭐ Recall Questions
           </span>
-          <Link to="/allquiz">
+          <Link to="/all-recall-question">
             <CommonButton color="secondary" width={120} height={40}>
               View More
             </CommonButton>
@@ -227,14 +238,14 @@ const Dashboard = () => {
         </div>
 
         <div className="grid lg:grid-cols-5 gap-6 md:grid-cols-2 sm:grid-cols-2 xs:grid-cols-2 mt-3">
-          {popularquiz?.slice(0, 8).map((item) => (
+          {recallCategories?.slice(0, 8).map((item) => (
             <Card
               number={""}
               key={item._id}
-              title2={"quizes"}
+              title2={"recall questions"}
               image={item?.image}
               title={item?.cat_name}
-              link={`/category/quiz?category=${item?.cat_name}`}
+              link={`/recall-category/recall?category=${item?.cat_name}`}
               disabled={item?.accessibility === "paid" && userType === "unpaid"}
             />
           ))}
@@ -281,7 +292,7 @@ const Dashboard = () => {
           )}
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-6 md:grid-cols-2 sm:grid-cols-1 xs:grid-cols-1 mt-3">
+        {/* <div className="grid lg:grid-cols-2 gap-6 md:grid-cols-2 sm:grid-cols-1 xs:grid-cols-1 mt-3">
           {reviews?.map((item) => (
             <ReviewCard
               review={item?.review}
@@ -290,7 +301,9 @@ const Dashboard = () => {
               image={item?.user_profile_image}
             />
           ))}
-        </div>
+        </div> */}
+
+        <ReviewCarousel reviews={reviews} />
 
         {isModalOpen && (
           <PopupModal isOpen={isModalOpen} onClose={closeModal} />
