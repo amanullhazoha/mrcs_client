@@ -27,7 +27,7 @@ const responsive = {
 
 const ReviewCarousel = ({ reviews }) => {
   return (
-    <div className="mt-3">
+    <div className="pt-3 px-2 bg-[#FAF6E8] rounded-b-lg">
       <Carousel
         responsive={responsive}
         infinite={true}

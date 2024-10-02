@@ -12,6 +12,8 @@ import { BsBoxSeam, BsPassFill, BsPatchExclamationFill, BsPerson, BsQuestionDiam
 import { GiBlackBook } from "react-icons/gi";
 import logo from "../../../assets/mrcs.png";
 import { MdOutlineQuiz } from "react-icons/md";
+import { RiQuestionnaireLine } from "react-icons/ri";
+
 
 
 const Sidebar = () => {
@@ -138,6 +140,12 @@ const Sidebar = () => {
               </NavLink>
             </li>
             <li>
+              <NavLink to={"/all-recall-question"} className="link text-green-400">
+                <MdOutlineQuiz size={23} className="min-w-max text-green-300" />
+                Recall Questions
+              </NavLink>
+            </li>
+            <li>
               <NavLink to={"/results"} className="link text-green-400">
                 <AiFillTrophy size={23} className="min-w-max text-green-300" />
                 Result
@@ -165,7 +173,7 @@ const Sidebar = () => {
 
             <li>
               <NavLink to={"/faq"} className="link text-green-400">
-                < BsPassFill size={23} className="min-w-max text-green-400 " />
+                < RiQuestionnaireLine size={23} className="min-w-max text-green-400 " />
                 FAQ
               </NavLink>
             </li>

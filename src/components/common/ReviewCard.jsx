@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { logo } from "../../assets/image";
+import { user } from "../../assets/image";
 import { Rating } from "@smastrom/react-rating";
 
 const ReviewCard = ({
@@ -21,7 +21,7 @@ const ReviewCard = ({
           <div className="flex gap-2.5 mb-2.5">
             <img
                 alt="Profile"
-                src={image ? image : logo}
+                src={image ? image : user}
                 className=" rounded-full w-12 h-13 border border-emerald-500 "
             />
             

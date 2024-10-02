@@ -15,6 +15,8 @@ import ControlService from "../service/ControlService";
 import ReviewCard from "../components/common/ReviewCard";
 import ReviewModal from "../components/common/ReviewModal";
 import ReviewCarousel from "../components/common/ReviewCarousel";
+import { FaClipboardQuestion } from "react-icons/fa6";
+import { FaFileCircleQuestion } from "react-icons/fa6";
 
 const Dashboard = () => {
   const [slider, setSlider] = useState([]);
@@ -200,7 +202,7 @@ const Dashboard = () => {
 
         <div className="w-full  mt-10 flex justify-between ">
           <span className="lg:text-xl xs:text-md md:text-lg font-medium font-sans text-emerald-600 ">
-            📚 Study Material
+            📚 Study Materials
           </span>
           <Link to="/allstudy">
             <CommonButton
@@ -222,13 +224,15 @@ const Dashboard = () => {
               image={study?.image}
               title2={study?.study_title}
               link={`/allstudy/study/${study?._id} `}
+              disabled={study?.accessibility === "paid" && userType === "unpaid"}
             />
           ))}
         </div>
 
         <div className="w-full  mt-10 flex justify-between ">
-          <span className="lg:text-xl xs:text-lg md:text-lg font-medium font-sans text-emerald-600 ">
-            ⭐ Recall Questions
+          <span className="lg:text-xl xs:text-lg md:text-lg font-medium font-sans text-emerald-600 flex items-center gap-1.5">
+              <FaClipboardQuestion className="text-red-500" />
+             Recall Questions
           </span>
           <Link to="/all-recall-question">
             <CommonButton color="secondary" width={120} height={40}>
@@ -253,8 +257,9 @@ const Dashboard = () => {
 
         {/* popular quiz category */}
         <div className="w-full  mt-10 flex justify-between ">
-          <span className="lg:text-xl xs:text-lg md:text-lg font-medium font-sans text-emerald-600 ">
-            ⭐ Popular Mock Test
+          <span className="lg:text-xl xs:text-lg md:text-lg font-medium font-sans text-emerald-600 flex items-center gap-1.5">
+            <FaFileCircleQuestion className="text-red-900" />
+            Mock Tests
           </span>
           <Link to="/allquiz">
             <CommonButton color="secondary" width={120} height={40}>
@@ -278,9 +283,9 @@ const Dashboard = () => {
         </div>
 
         {/* popular quiz category */}
-        <div className="w-full  mt-10 flex justify-between ">
-          <span className="lg:text-xl xs:text-lg md:text-lg font-medium font-sans text-emerald-600 ">
-            ⭐Reviews
+        <div className="w-full mt-10 pt-5 flex justify-between bg-[#FAF6E8] rounded-t-lg">
+          <span className="lg:text-4xl text-2xl font-medium font-sans text-emerald-600 text-center w-full">
+            Candidate's Feedback
           </span>
 
           {userType === "paid" && !loginUserReview && (
@@ -303,7 +308,7 @@ const Dashboard = () => {
           ))}
         </div> */}
 
-        <ReviewCarousel reviews={reviews} />
+        {reviews?.length > 0 && (<ReviewCarousel reviews={reviews} />)}
 
         {isModalOpen && (
           <PopupModal isOpen={isModalOpen} onClose={closeModal} />
