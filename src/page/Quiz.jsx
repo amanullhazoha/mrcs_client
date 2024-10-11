@@ -26,6 +26,7 @@ const Quiz = () => {
     const getUserData = async () => {
       try {
         const res = await UserService.getSingleUser(access_token);
+
         setUserType(res?.data?.usertype);
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -33,7 +34,7 @@ const Quiz = () => {
     };
 
     getUserData();
-  }, [id]);
+  }, [token]);
 
   return (
     <Fragment>

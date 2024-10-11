@@ -13,7 +13,7 @@ const getSingleUser = (token) => {
   });
 };
 
-const UploadImage = (id, values, token) => {
+const UploadImage = (values, token) => {
   return FAPI.put(`/users/profile/update`, values, {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -22,7 +22,7 @@ const UploadImage = (id, values, token) => {
   });
 };
 
-const updateUser = (id, values) => {
+const updateUser = (values, token) => {
   return API.put(`/users/profile/update`, values, {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -36,9 +36,9 @@ const getSubscription = () => {
 };
 
 const UserService = {
-  getSingleUser,
-  UploadImage,
   updateUser,
+  UploadImage,
+  getSingleUser,
   getSubscription,
 };
 

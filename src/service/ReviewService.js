@@ -1,21 +1,31 @@
-import { API, FAPI } from "../config/axiosConfig"
+import { API } from "../config/axiosConfig";
 
-const getReviews = (id)=>{
-  return API.get(`/reviews`)
-}
+const getReviews = () => {
+  return API.get(`/reviews/show`);
+};
 
-const getLoggedInUserReview = ()=>{
-  return API.get(`/reviews/logged-in-user`);
-}
+const getLoggedInUserReview = (token) => {
+  return API.get(`/reviews/logged-in-user`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  });
+};
 
-const addReview = (values)=>{
-  return API.post(`/reviews/add`, values);
-}
+const addReview = (values, token) => {
+  return API.post(`/reviews/add`, values, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  });
+};
 
-const ReviewService = { 
+const ReviewService = {
   addReview,
   getReviews,
-  getLoggedInUserReview
+  getLoggedInUserReview,
 };
 
 export default ReviewService;

@@ -14,15 +14,17 @@ const getSingleQuiz = (id) => {
 const updateQuiz = (id, values) => {
   return API.put(`/quiz/update/${id}`, values);
 };
+
 const deleteQuiz = (id) => {
   return API.delete(`/quiz/delete/${id}`);
 };
+
 const QuizService = {
   getQuiz,
   addQuiz,
   updateQuiz,
-  getSingleQuiz,
   deleteQuiz,
+  getSingleQuiz,
 };
 
 export default QuizService;

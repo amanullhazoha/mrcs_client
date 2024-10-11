@@ -1,13 +1,11 @@
 import { API } from "../config/axiosConfig";
 
-
 const getFaq = () => {
   return API.get("/faq");
 };
 
-
 const FaqService = {
-    getFaq,
+  getFaq,
 };
 
 export default FaqService;

@@ -1,74 +1,78 @@
+import Cookie from "js-cookie";
+import { Profile } from "../assets";
+import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
+import { MdEdit } from "react-icons/md";
 import { BiEdit } from "react-icons/bi";
 import { FaUserAlt } from "react-icons/fa";
+import { HiOutlineKey } from "react-icons/hi";
 import { Box, Breadcrumbs } from "@mui/material";
 import UserService from "../service/UserService";
+import AddUser from "../components/Users/AddUser";
 import React, { Fragment, useEffect, useState } from "react";
+import ChangePassword from "../components/Users/ChangePassword";
 import PackageBreadcrumb from "../components/common/PackageBreadcrumb";
 
-import { MdEdit } from "react-icons/md";
-import { toast } from "react-toastify";
-import { HiOutlineKey } from "react-icons/hi";
-
-import AddUser from "../components/Users/AddUser";
-import ChangePassword from "../components/Users/ChangePassword";
-import { Profile } from "../assets";
 const User = () => {
-  const userid = localStorage.getItem("userid");
-
-  const [selectedImage, setSelectedImage] = useState(null);
   const [data, setData] = useState([]);
-
   const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
   const [popen, setPopen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  const access_token = Cookie.get("mrcs_cookie");
+
+  const handleOpen = () => setOpen(true);
+
+  const handleClose = () => setOpen(false);
+
   const handlePOpen = () => setPopen(true);
+
   const handlePClose = () => setPopen(false);
 
-  // Define the fetchData function outside the useEffect hook
-  const fetchData = async (userId) => {
+  const fetchData = async (access_token) => {
     try {
-      const res = await UserService.getSingleUser(userId);
+      const res = await UserService.getSingleUser(access_token);
+
       return res.data;
     } catch (error) {
-      // Handle the error here, e.g., log the error or show a user-friendly message.
-      console.error("Error fetching user data:", error);
-      throw error; // Re-throw the error to allow the caller to handle it if needed.
+      throw error;
     }
   };
 
-  // Inside your functional component
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0];
+    setSelectedImage(URL.createObjectURL(file));
+
+    uploadImage(file);
+  };
+
+  const uploadImage = async (file) => {
+    try {
+      const formData = new FormData();
+
+      formData.append("image", file);
+
+      await UserService.UploadImage(formData, access_token);
+
+      toast.success("Profile Image Upload Successfully");
+    } catch (error) {
+      console.error("Error uploading image:", error);
+    }
+  };
+
   useEffect(() => {
     const getUserData = async () => {
       try {
-        const userData = await fetchData(userid);
+        const userData = await fetchData();
+
         setData(userData);
       } catch (error) {
         // Handle the error here or display an error message to the user.
       }
     };
 
-    getUserData(); // Call the function to fetch and update user data
-  }, [userid]);
-
-  const handleImageUpload = (event) => {
-    const file = event.target.files[0];
-    setSelectedImage(URL.createObjectURL(file));
-    uploadImage(file);
-  };
-  const uploadImage = async (file) => {
-    try {
-      const formData = new FormData();
-      formData.append("image", file);
-
-      // Replace 'PUT_API_ENDPOINT' with the actual API endpoint URL for image upload
-      await UserService.UploadImage(data?._id, formData);
-      toast.success("Profile Image Upload Successfully");
-    } catch (error) {
-      console.error("Error uploading image:", error);
-    }
-  };
+    getUserData();
+  }, [access_token]);
 
   return (
     <Fragment>
@@ -153,12 +157,14 @@ const User = () => {
               </div>
             </div>
           </div>
+
           <ChangePassword
             open={popen}
             data={data}
             onClose={handlePClose}
             fetchData={fetchData}
           />
+
           <AddUser
             data={data}
             open={open}

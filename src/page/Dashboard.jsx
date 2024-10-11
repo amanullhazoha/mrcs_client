@@ -1,25 +1,27 @@
-import React, { Fragment, useEffect, useState } from "react";
-import { useQuery } from "react-query";
-import { API } from "../config/axiosConfig";
 import Cookie from "js-cookie";
+import { hero } from "../assets";
+import { useQuery } from "react-query";
+import { Link } from "react-router-dom";
+import { API } from "../config/axiosConfig";
+import Card from "../components/common/Card";
+import UserService from "../service/UserService";
+import StudyService from "../service/StudyService";
+import SliderService from "../service/SliderService";
+import { FaClipboardQuestion } from "react-icons/fa6";
+import ControlService from "../service/ControlService";
+import { FaFileCircleQuestion } from "react-icons/fa6";
+import ReviewCard from "../components/common/ReviewCard";
+import PopupModal from "../components/common/PopupModal";
+import ReviewModal from "../components/common/ReviewModal";
+import React, { Fragment, useEffect, useState } from "react";
+import CommonButton from "../components/common/CommonButton";
+import ReviewCarousel from "../components/common/ReviewCarousel";
 import { CommonProgress } from "../components/common/CommonProgress";
 
-import CommonButton from "../components/common/CommonButton";
-import Card from "../components/common/Card";
-import SliderService from "../service/SliderService";
-import StudyService from "../service/StudyService";
-import { Link } from "react-router-dom";
-import { hero } from "../assets";
-import UserService from "../service/UserService";
-import PopupModal from "../components/common/PopupModal";
-import ControlService from "../service/ControlService";
-import ReviewCard from "../components/common/ReviewCard";
-import ReviewModal from "../components/common/ReviewModal";
-import ReviewCarousel from "../components/common/ReviewCarousel";
-import { FaClipboardQuestion } from "react-icons/fa6";
-import { FaFileCircleQuestion } from "react-icons/fa6";
-
 const Dashboard = () => {
+  const id = localStorage.getItem("userid");
+  const access_token = Cookie.get("mrcs_cookie");
+
   const [slider, setSlider] = useState([]);
   const [study, setStudy] = useState([]);
   const [control, setControl] = useState([]);
@@ -27,64 +29,10 @@ const Dashboard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isReviewOpen, setIsReviewOpen] = useState(false);
 
-  const id = localStorage.getItem("userid");
-
-  useEffect(() => {
-    const getUserData = async () => {
-      try {
-        const res = await UserService.getSingleUser(id);
-
-        // Convert the string value to a boolean
-        const modalShownFlag = localStorage.getItem("modalShown") === "true";
-
-        setUserType(res?.data?.usertype);
-
-        if (res?.data?.usertype === "unpaid" && !modalShownFlag) {
-          setIsModalOpen(true);
-          // Set the flag in localStorage to prevent modal from showing again
-        }
-      } catch (error) {
-        // Handle any error that might occur while fetching user data
-        console.error("Error fetching user data:", error);
-      }
-    };
-
-    getUserData(id);
-  }, [id]);
-
-  useEffect(() => {
-    const fetchSlider = async () => {
-      try {
-        const response = await SliderService.getSlider();
-        setSlider(response?.data);
-      } catch (error) {
-        console.error("Error fetching slider:", error);
-      }
-    };
-    const fetchStudy = async () => {
-      try {
-        const response = await StudyService.getStudy();
-        setStudy(response?.data);
-      } catch (error) {
-        console.log("Error fetching study:", error);
-      }
-    };
-    const fetchControl = async () => {
-      try {
-        const response = await ControlService.getControl();
-        const activeControl = response?.data?.filter(
-          (item) => item.status === "active"
-        );
-        setControl(activeControl);
-      } catch (error) {
-        console.error("Error fetching slider:", error);
-      }
-    };
-
-    fetchSlider();
-    fetchStudy();
-    fetchControl();
-  }, []);
+  const closeModal = () => {
+    setIsModalOpen(false);
+    localStorage.setItem("modalShown", "true");
+  };
 
   const {
     data: popularquiz,
@@ -119,13 +67,71 @@ const Dashboard = () => {
     isLoginUserReviewLoading,
     isLoginUserReview,
   } = useQuery("myReview", () =>
-    API.get("/reviews/logged-in-user").then((res) => res.data)
+    API.get("/reviews/logged-in-user", {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+        "Content-Type": "application/json",
+      },
+    }).then((res) => res.data)
   );
 
-  const closeModal = () => {
-    setIsModalOpen(false);
-    localStorage.setItem("modalShown", "true");
-  };
+  useEffect(() => {
+    const getUserData = async () => {
+      try {
+        const res = await UserService.getSingleUser(access_token);
+
+        const modalShownFlag = localStorage.getItem("modalShown") === "true";
+
+        setUserType(res?.data?.usertype);
+
+        if (res?.data?.usertype === "unpaid" && !modalShownFlag) {
+          setIsModalOpen(true);
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    getUserData(id);
+  }, [id]);
+
+  useEffect(() => {
+    const fetchSlider = async () => {
+      try {
+        const response = await SliderService.getSlider();
+        setSlider(response?.data);
+      } catch (error) {
+        console.error("Error fetching slider:", error);
+      }
+    };
+
+    const fetchStudy = async () => {
+      try {
+        const response = await StudyService.getStudy();
+
+        setStudy(response?.data);
+      } catch (error) {
+        console.log("Error fetching study:", error);
+      }
+    };
+    const fetchControl = async () => {
+      try {
+        const response = await ControlService.getControl();
+
+        const activeControl = response?.data?.filter(
+          (item) => item.status === "active"
+        );
+
+        setControl(activeControl);
+      } catch (error) {
+        console.error("Error fetching slider:", error);
+      }
+    };
+
+    fetchSlider();
+    fetchStudy();
+    fetchControl();
+  }, []);
 
   if (isLoading) {
     return (
@@ -199,8 +205,6 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Study material  */}
-
         <div className="w-full  mt-10 flex justify-between ">
           <span className="lg:text-xl xs:text-md md:text-lg font-medium font-sans text-emerald-600 ">
             📚 Study Materials
@@ -258,7 +262,6 @@ const Dashboard = () => {
           ))}
         </div>
 
-        {/* popular quiz category */}
         <div className="w-full  mt-10 flex justify-between ">
           <span className="lg:text-xl xs:text-lg md:text-lg font-medium font-sans text-emerald-600 flex items-center gap-1.5">
             <FaFileCircleQuestion className="text-red-900" />
@@ -285,7 +288,6 @@ const Dashboard = () => {
           ))}
         </div>
 
-        {/* popular quiz category */}
         <div className="w-full mt-10 pt-5 flex justify-between bg-[#FAF6E8] rounded-t-lg">
           <span className="lg:text-4xl text-2xl font-medium font-sans text-emerald-600 text-center w-full">
             Candidate's Feedback

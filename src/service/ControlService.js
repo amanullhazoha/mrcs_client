@@ -1,13 +1,11 @@
 import { API } from "../config/axiosConfig";
 
-
 const getControl = () => {
   return API.get("/control");
 };
 
-
 const ControlService = {
-    getControl,
+  getControl,
 };
 
 export default ControlService;

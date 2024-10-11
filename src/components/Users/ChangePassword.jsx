@@ -1,55 +1,63 @@
-import React, { Fragment, useState } from "react";
+import Cookie from "js-cookie";
+import { toast } from "react-toastify";
+import { BiLockAlt } from "react-icons/bi";
+import { Fragment, useState } from "react";
+import { Progress } from "../common/Progress";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import UserService from "../../service/UserService";
+import { AiOutlineCloseCircle } from "react-icons/ai";
 import { Formik, Form, Field, ErrorMessage } from "formik";
+import signupValidationSchema from "../../utils/validation/signupValidation";
+import passwordValidationSchema from "../../utils/validation/passwordValidation";
 import {
-  Backdrop,
   Box,
-  Chip,
-  Divider,
   Fade,
-  IconButton,
+  Chip,
   Modal,
+  Divider,
+  Backdrop,
+  IconButton,
   Typography,
 } from "@mui/material";
-import { AiOutlineCloseCircle } from "react-icons/ai";
-import { toast } from "react-toastify";
-import { Progress } from "../common/Progress";
-import signupValidationSchema from "../../utils/validation/signupValidation";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { BiLockAlt } from "react-icons/bi";
-import UserService from "../../service/UserService";
-import passwordValidationSchema from "../../utils/validation/passwordValidation";
 
 const style = {
-  position: "absolute",
+  p: 4,
   top: "50%",
   left: "50%",
-  transform: "translate(-50%,-50%)",
   width: "450px",
+  position: "absolute",
+  borderRadius: "10px",
   bgcolor: "background.paper",
   border: "2px solid #F7FDFF",
-  borderRadius: "10px",
+  transform: "translate(-50%,-50%)",
   boxShadow: `3px 2px 3px 1px rgba(0, 0, 0, 0.2)`,
-  p: 4,
 };
+
 const ChangePassword = ({ open, onClose, data, fetchData }) => {
+  const access_token = Cookie.get("mrcs_cookie");
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
   const handleResetAndClose = (resetForm) => {
     onClose();
     fetchData();
     resetForm();
   };
-  const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);
   };
 
   const handleSubmit = async (values, { setSubmitting, setErrors }) => {
     try {
-      //api call
       setIsLoading(true);
+
       const response = await UserService.addUser(values);
+
       if (response.status === 200) {
         const responseData = response.data;
+
         if (responseData.error) {
           toast.error(responseData.error.message);
           const errorData = responseData.error;
@@ -63,8 +71,10 @@ const ChangePassword = ({ open, onClose, data, fetchData }) => {
           }
         } else {
           toast.success("Successfully Add User ");
+
           onClose();
           fetchData();
+
           setIsLoading(false);
         }
         setSubmitting(false);
@@ -72,7 +82,9 @@ const ChangePassword = ({ open, onClose, data, fetchData }) => {
     } catch (err) {
       if (err.response) {
         const errorData = err.response.data;
+
         toast.error(errorData.message);
+
         if (errorData.errors) {
           const errors = Object.keys(errorData.errors).reduce((acc, key) => {
             acc[key] = errorData.errors[key].msg;
@@ -91,17 +103,19 @@ const ChangePassword = ({ open, onClose, data, fetchData }) => {
 
   const handleUpdate = async (values, { setSubmitting, setErrors }) => {
     try {
-      //api call
-      const response = await UserService.updateUser(data._id, values);
+      const response = await UserService.updateUser(values, access_token);
+
       if (response.status === 200) {
         toast.success("Successfully Update Password ");
+
         setSubmitting(false);
+
         onClose();
         fetchData();
       }
     } catch (err) {
       toast.error("Something went wrong");
-      console.log(err);
+
       setErrors(err);
       setSubmitting(false);
     }
@@ -141,7 +155,6 @@ const ChangePassword = ({ open, onClose, data, fetchData }) => {
                   resetForm,
                 }) => (
                   <Form>
-                    {/* <>{JSON.stringify(values)}</> */}
                     <Box
                       sx={{
                         pb: 0,
@@ -153,6 +166,7 @@ const ChangePassword = ({ open, onClose, data, fetchData }) => {
                       <Typography variant="h5" component="h5">
                         Changes Password
                       </Typography>
+
                       <div style={{}}>
                         <IconButton
                           aria-label="edit"
@@ -169,6 +183,7 @@ const ChangePassword = ({ open, onClose, data, fetchData }) => {
                         </IconButton>
                       </div>
                     </Box>
+
                     <Divider sx={{ mb: 2 }}>
                       <Chip label="Password" />
                     </Divider>
@@ -180,6 +195,7 @@ const ChangePassword = ({ open, onClose, data, fetchData }) => {
                       >
                         Password
                       </label>
+
                       <div className="mt-1">
                         <div className="relative">
                           <Field
@@ -207,6 +223,7 @@ const ChangePassword = ({ open, onClose, data, fetchData }) => {
                             {showPassword ? <FaEyeSlash /> : <FaEye />}
                           </button>
                         </div>
+
                         <ErrorMessage
                           name="password"
                           component="p"
