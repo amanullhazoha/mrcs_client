@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
-import PackageBreadcrumb from "../components/common/PackageBreadcrumb";
 import { Box, Breadcrumbs } from "@mui/material";
 import { BsFillPatchExclamationFill } from "react-icons/bs";
+import PackageBreadcrumb from "../components/common/PackageBreadcrumb";
 
 const AboutUs = () => {
   return (
@@ -16,8 +16,6 @@ const AboutUs = () => {
               />
               &nbsp; <span className="text-emerald-500">About Us</span>
             </Box>
-
-            {/* <Typography color="grey">sdfgh</Typography> */}
           </Breadcrumbs>
         </PackageBreadcrumb>
 
@@ -71,29 +69,6 @@ const AboutUs = () => {
               and patience. Thank you for reading about MRCS Aid.`}
             </span>
           </div>
-
-          {/* <div className="px-8 py-4 flex flex-col ">
-          <span className="text-3xl font-medium font-sans py-2 text-emerald-500">
-          🌟 For Subscription 🌟 
-          </span>
-          <span className="text-3xl font-normal text-indigo-600 py-2">
-            Subscription Fee is 1000 TK for One Time. 
-          </span>
-          <div className="flex py-3">
-          <span className="text-xl text-purple-900 font-medium ">
-            Bkash : &nbsp; 
-          </span>
-          <span className="text-2xl font-medium text-gray-900">  01824050330</span>
-          </div>
-          
-          <span>
-            Email: admin@mrcsaid.com or surgeons.intl@gmail.com
-          </span>
-          <div className="flex py-5">
-          <span className="text-lg font-bold font-sans">N.B. &nbsp;&nbsp;</span>
-          <span className="text-xl font-sans">After Send Money You should Send mail by your Name, Email, Batch, Transaction Number. After Confirmation Email You can Access Paid Quiz.  </span>
-          </div>
-        </div> */}
         </div>
       </div>
     </Fragment>

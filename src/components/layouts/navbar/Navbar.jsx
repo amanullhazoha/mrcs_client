@@ -14,8 +14,10 @@ import { Link } from "react-router-dom";
 import UserService from "../../../service/UserService";
 import PopupModal from "../../common/PopupModal";
 import { logo } from "../../../assets/image";
+import Cookie from "js-cookie";
 
 const Navbar = () => {
+  const access_token = Cookie.get("mrcs_cookie");
   const { toggleMenu } = useContext(MenuContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -39,7 +41,7 @@ const Navbar = () => {
   useEffect(() => {
     const getUserData = async () => {
       try {
-        const res = await UserService.getSingleUser(id);
+        const res = await UserService.getSingleUser(access_token);
 
         setUsertype(res?.data);
       } catch (error) {
@@ -47,15 +49,13 @@ const Navbar = () => {
         console.error("Error fetching user data:", error);
       }
     };
-    getUserData(id);
-  }, [token]);
+
+    getUserData();
+  }, [access_token]);
 
   const closeModal = () => {
     setIsModalOpen(false);
   };
-
-  console.log(usertype);
-  console.log("hi")
 
   return (
     <nav

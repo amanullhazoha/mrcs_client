@@ -1,14 +1,11 @@
-//External Import
-import React, { Fragment, useEffect, useState } from "react";
-import { Box, Breadcrumbs } from "@mui/material";
 import { Link } from "react-router-dom";
-
-//Internal Import
-import PackageBreadcrumb from "../components/common/PackageBreadcrumb";
-import UserService from "../service/UserService";
-
-import { FaUserAlt } from "react-icons/fa";
 import { BiEdit } from "react-icons/bi";
+import { FaUserAlt } from "react-icons/fa";
+import { Box, Breadcrumbs } from "@mui/material";
+import UserService from "../service/UserService";
+import React, { Fragment, useEffect, useState } from "react";
+import PackageBreadcrumb from "../components/common/PackageBreadcrumb";
+
 import { MdEdit } from "react-icons/md";
 import { toast } from "react-toastify";
 import { HiOutlineKey } from "react-icons/hi";

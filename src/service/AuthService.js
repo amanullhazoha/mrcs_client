@@ -1,32 +1,33 @@
+import Cookie from "js-cookie";
 import { toast } from "react-toastify";
 import { API } from "../config/axiosConfig";
 
 const signin = (values) => {
   return API.post("/login", values);
 };
-const signup =(values)=>{
-  return API.post("/users/adduser",values);
-}
-
-const forgotPassword = (values)=>{
-  return API.post("/auth/forgot-password",values);
-}
-const resetPassword = (token,values)=>{
-  return API.post(`/auth/reset-password/${token}`,values)
-}
-const handleLogout=()=> {
-  API.delete("/logout")
-    .then((response)=>{
-        localStorage.removeItem("token");
-        toast.success("Logout Successfully!");
-        return window.location.replace("/login"); 
-    })
-    .catch((err)=>{
-      toast.error("Something is Wrong,");
-      console.log("Err => ", err);  
-    })
+const signup = (values) => {
+  return API.post("/users/adduser", values);
 };
 
+const forgotPassword = (values) => {
+  return API.post("/auth/forgot-password", values);
+};
+const resetPassword = (token, values) => {
+  return API.post(`/auth/reset-password/${token}`, values);
+};
+const handleLogout = () => {
+  API.delete("/logout")
+    .then((response) => {
+      localStorage.removeItem("token");
+      Cookie.remove("mrcs_cookie");
+      toast.success("Logout Successfully!");
+      return window.location.replace("/login");
+    })
+    .catch((err) => {
+      toast.error("Something is Wrong,");
+      console.log("Err => ", err);
+    });
+};
 
 const getCurrentUser = () => {
   const token = localStorage.getItem("token");
@@ -42,7 +43,7 @@ const AuthService = {
   getCurrentUser,
   handleLogout,
   signup,
-  forgotPassword, 
+  forgotPassword,
   resetPassword,
 };
 export default AuthService;

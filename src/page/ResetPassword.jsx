@@ -1,23 +1,24 @@
-import React, { Fragment, useState } from "react";
-import { ErrorMessage, Field, Form, Formik } from "formik";
-import forgotPasswordValidationSchema from "../utils/validation/forgotPasswordValidation";
-import { Progress } from "../components/common/Progress";
-import { BiLockAlt } from "react-icons/bi";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
-import AuthService from "../service/AuthService";
-import resetPasswordValidationSchema from "../utils/validation/resetPasswordValidation";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
-import { useParams } from 'react-router-dom';
+import { BiLockAlt } from "react-icons/bi";
+import React, { Fragment, useState } from "react";
+import AuthService from "../service/AuthService";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { Progress } from "../components/common/Progress";
+import { useParams, useNavigate } from "react-router-dom";
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import resetPasswordValidationSchema from "../utils/validation/resetPasswordValidation";
+import forgotPasswordValidationSchema from "../utils/validation/forgotPasswordValidation";
 
 const ResetPassword = () => {
-  const initialValues = {
-    confirmPassword: "",
-    newPassword: "",
-  };
   let navigate = useNavigate();
-  const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const initialValues = {
+    newPassword: "",
+    confirmPassword: "",
+  };
+
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);
   };
@@ -25,7 +26,8 @@ const ResetPassword = () => {
 
   const handleSubmit = async (values, { setSubmitting, setErrors }) => {
     setIsLoading(true);
-    AuthService.resetPassword(token,values)
+
+    AuthService.resetPassword(token, values)
       .then((response) => {
         toast.success("Successfully Reset Password !");
         setIsLoading(false);
@@ -34,7 +36,6 @@ const ResetPassword = () => {
       .catch((err) => {
         setIsLoading(false);
         toast.error("Something went Wrong!");
-      
       });
   };
   return (
@@ -112,7 +113,9 @@ const ResetPassword = () => {
                           autoComplete="current-password"
                           value={values.confirmPassword}
                           onChange={handleChange}
-                          error={touched.confirmPassword && errors.confirmPassword}
+                          error={
+                            touched.confirmPassword && errors.confirmPassword
+                          }
                           className={`appearance-none block w-full px-3 py-2 border border-gray-300 
                         rounded-md shadow-sm placeholder-gray-400 
                         focus:ring-yellow-500 focus:border-yellow-500 focus:ring-1 sm:text-sm ${

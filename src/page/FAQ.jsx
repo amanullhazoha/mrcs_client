@@ -9,7 +9,6 @@ const Faq = () => {
   const [data, setData] = useState([]);
   const { id } = useParams();
 
-  // Fetch User Data
   useEffect(() => {
     fetchData(id);
   }, [id]);
@@ -47,7 +46,9 @@ const Faq = () => {
             </div> */}
             <div className="w-full px-4 mt-5">
               {data?.faq_description ? (
-                <div dangerouslySetInnerHTML={{ __html: data?.faq_description }} />
+                <div
+                  dangerouslySetInnerHTML={{ __html: data?.faq_description }}
+                />
               ) : (
                 ""
               )}

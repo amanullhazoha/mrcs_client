@@ -1,24 +1,29 @@
-import { ErrorMessage, Field, Form, Formik } from "formik";
-import React, { Fragment, useState } from "react";
-import signinValidationSchema from "../utils/validation/signinValidation";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Progress } from "../components/common/Progress";
+import Cookie from "js-cookie";
+import { toast } from "react-toastify";
+import { logo } from "../assets/image";
 import { BiLockAlt } from "react-icons/bi";
 import AuthService from "../service/AuthService";
-import { toast } from "react-toastify";
+import React, { Fragment, useState } from "react";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
-import { logo } from "../assets/image";
+import { Progress } from "../components/common/Progress";
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import signinValidationSchema from "../utils/validation/signinValidation";
+
 const Signin = () => {
   let navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
   const initialValues = {
     username: "",
     password: "",
   };
-  const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);
   };
+
   const handleSubmit = async (values, { setSubmitting, setErrors }) => {
     setIsLoading(true);
 
@@ -32,8 +37,9 @@ const Signin = () => {
         localStorage.setItem("userid", `${response.data?.userid}`);
         localStorage.setItem("username", `${response.data?.username}`);
         localStorage.setItem("profile", `${response.data?.profile}`);
-        // const user = response.data.username;
-        // dispatch({ type: "LOGIN", payload: user});
+
+        Cookie.set("mrcs_cookie", response.data.token);
+
         toast.success("Successfully login");
         setSubmitting(false);
         setIsLoading(false);
@@ -66,7 +72,6 @@ const Signin = () => {
                     height="100px"
                     className="items-center mt-5"
                   />
-                  {/* <img alt="" src={logo2} width="250px" height="200px " className="items-center mt-5"/> */}
                 </div>
               </div>{" "}
             </div>

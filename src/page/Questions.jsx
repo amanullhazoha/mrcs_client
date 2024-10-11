@@ -1,24 +1,24 @@
-import React, { Fragment, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { API } from "../config/axiosConfig";
+import { useLocation } from "react-router-dom";
+import NotFound from "../components/common/NotFound";
+import { Fragment, useEffect, useState } from "react";
+import { BsFillPatchQuestionFill } from "react-icons/bs";
+import { Progress } from "../components/common/Progress";
+import QuestionService from "../service/QuestionService";
+import ViewQuestions from "../components/Questions/ViewQuestions";
+import { CommonProgress } from "../components/common/CommonProgress";
+import PackageBreadcrumb from "../components/common/PackageBreadcrumb";
 import {
   Box,
-  Breadcrumbs,
   Card,
-  FormControl,
-  FormControlLabel,
   Radio,
   RadioGroup,
   Typography,
+  FormControl,
+  Breadcrumbs,
+  FormControlLabel,
 } from "@mui/material";
-import { BsFillPatchQuestionFill, BsPatchQuestionFill } from "react-icons/bs";
-import { useLocation } from "react-router-dom";
-import { API } from "../config/axiosConfig";
-import PackageBreadcrumb from "../components/common/PackageBreadcrumb";
-import QuestionService from "../service/QuestionService";
-import ViewQuestions from "../components/Questions/ViewQuestions";
-import { Progress } from "../components/common/Progress";
-import { Link } from "react-router-dom";
-import NotFound from "../components/common/NotFound";
-import { CommonProgress } from "../components/common/CommonProgress";
 
 const Questions = () => {
   const location = useLocation();
@@ -48,7 +48,7 @@ const Questions = () => {
   const handleValueChange = (questionId, selectedValue) => {
     setItems((prevItems) => {
       const existingItemIndex = prevItems.findIndex(
-        (item) => item.question_id === questionId,
+        (item) => item.question_id === questionId
       );
 
       if (existingItemIndex !== -1) {
@@ -59,7 +59,7 @@ const Questions = () => {
         return updatedItems;
       } else {
         const question = questions.find(
-          (question) => question._id === questionId,
+          (question) => question._id === questionId
         );
         if (!question) {
           localStorage.setItem("questions", JSON.stringify(prevItems));
@@ -74,7 +74,7 @@ const Questions = () => {
 
         localStorage.setItem(
           "questions",
-          JSON.stringify([...prevItems, newItem]),
+          JSON.stringify([...prevItems, newItem])
         );
 
         return [...prevItems, newItem];
@@ -87,7 +87,7 @@ const Questions = () => {
       setIsLoading(true);
       const payload = {
         userId: userid,
-        username: username, // Include the user ID in the payload
+        username: username,
         items: items,
         quizName: id,
       };
@@ -95,31 +95,12 @@ const Questions = () => {
       const allQuestionsAnswered = questions.every((question) =>
         items.some(
           (item) =>
-            item?.question_id === question._id && item?.selected_value !== "",
-        ),
+            item?.question_id === question._id && item?.selected_value !== ""
+        )
       );
 
-      // if (!allQuestionsAnswered) {
-      //   // You can show an error message or highlight the unanswered questions
-      //   alert(
-      //     "Please make sure fill-up every question answer, otherwise you can't Submit",
-      //   );
-      //   setIsLoading(false);
-      //   return;
-      // } else {
-      //   const response = await QuestionService.addResult(payload);
-      //   if (response.status === 200) {
-      //     setQid(response?.data?.resultdata?._id);
-      //     setOpen(true);
-      //     setIsLoading(false);
-
-      //     localStorage.removeItem("questions");
-      //   } else {
-      //     console.log("Something went wrong");
-      //   }
-      // }
-
       const response = await QuestionService.addResult(payload);
+
       if (response.status === 200) {
         setQid(response?.data?.resultdata?._id);
         setOpen(true);
@@ -146,7 +127,7 @@ const Questions = () => {
       setIsLoading2(true);
       try {
         const response = await API.get(`/questions/questionbyquiz?quiz=${id}`);
-        // const shuffledArray = shuffleArray([...response.data]);
+
         setQuestions([...response.data]);
         setIsLoading2(false);
       } catch (error) {
@@ -229,7 +210,7 @@ const Questions = () => {
                           name={`question_${question._id}`}
                           value={
                             items?.find(
-                              (item) => item.question_id === question._id,
+                              (item) => item.question_id === question._id
                             )?.selected_value || ""
                           }
                           onChange={(e) =>
@@ -246,7 +227,7 @@ const Questions = () => {
                                     items?.find(
                                       (item) =>
                                         item?.question_id === question._id &&
-                                        item?.selected_value === key,
+                                        item?.selected_value === key
                                     )
                                       ? "bg-green-50"
                                       : ""

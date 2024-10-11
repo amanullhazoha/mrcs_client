@@ -1,34 +1,45 @@
-import { API, FAPI } from "../config/axiosConfig"
-
-
-
+import { API, FAPI } from "../config/axiosConfig";
 
 // const getSingleUser = (id)=>{
 //   return API.get(`/users/${id}`)
 // }
 
-const getSingleUser = ()=>{
-  return API.get(`/users/profile`)
-}
+const getSingleUser = (token) => {
+  return API.get(`/users/profile`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  });
+};
 
-const UploadImage = (id,values)=>{
-  return FAPI.put(`/users/profile/update`,values);
-}
+const UploadImage = (id, values, token) => {
+  return FAPI.put(`/users/profile/update`, values, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  });
+};
 
-const updateUser = (id,values)=>{
-  return API.put(`/users/profile/update`,values);
-}
+const updateUser = (id, values) => {
+  return API.put(`/users/profile/update`, values, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  });
+};
 
-const getSubscription = ()=>{
-  return API.get('/subscription');
-}
+const getSubscription = () => {
+  return API.get("/subscription");
+};
 
-
-const UserService = { 
+const UserService = {
   getSingleUser,
   UploadImage,
   updateUser,
-  getSubscription
+  getSubscription,
 };
 
 export default UserService;

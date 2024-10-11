@@ -1,43 +1,38 @@
-//External Import
-import React, { Fragment, useState, useEffect } from "react";
-import { Box, Breadcrumbs } from "@mui/material";
-import { Link, useLocation } from "react-router-dom";
+import Cookie from "js-cookie";
 import { useQuery } from "react-query";
-import UserService from "../service/UserService";
-import { BsBoxSeamFill, BsFillPatchQuestionFill } from "react-icons/bs";
-
-//Internal Import
-import PackageBreadcrumb from "../components/common/PackageBreadcrumb";
-import Card from "../components/common/Card";
 import { API } from "../config/axiosConfig";
+import Card from "../components/common/Card";
+import { Box, Breadcrumbs } from "@mui/material";
+import UserService from "../service/UserService";
 import NotFound from "../components/common/NotFound";
+import { Link, useLocation } from "react-router-dom";
+import React, { Fragment, useState, useEffect } from "react";
 import { CommonProgress } from "../components/common/CommonProgress";
+import PackageBreadcrumb from "../components/common/PackageBreadcrumb";
+import { BsBoxSeamFill, BsFillPatchQuestionFill } from "react-icons/bs";
 
 const Quiz = () => {
   const location = useLocation();
-  const [userType, setUserType] = useState("");
   const id = localStorage.getItem("userid");
+  const [userType, setUserType] = useState("");
+  const access_token = Cookie.get("mrcs_cookie");
   const category = new URLSearchParams(location.search).get("category");
 
   const { data, isLoading, isError } = useQuery(["myData", category], () =>
-    API.get(`/quiz/quizbycategory?category=${category}`).then(
-      (res) => res.data,
-    ),
+    API.get(`/quiz/quizbycategory?category=${category}`).then((res) => res.data)
   );
 
-  // Fetch User Data
   useEffect(() => {
     const getUserData = async () => {
       try {
-        const res = await UserService.getSingleUser(id);
+        const res = await UserService.getSingleUser(access_token);
         setUserType(res?.data?.usertype);
       } catch (error) {
-        // Handle any error that might occur while fetching user data
         console.error("Error fetching user data:", error);
       }
     };
 
-    getUserData(id);
+    getUserData();
   }, [id]);
 
   return (
@@ -61,7 +56,6 @@ const Quiz = () => {
               />
               <span className="text-emerald-700 ">&nbsp; Mock Test </span>
             </Box>
-            {/* <Typography color="grey">sdfgh</Typography> */}
           </Breadcrumbs>
         </PackageBreadcrumb>
         {isLoading ? (

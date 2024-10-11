@@ -20,6 +20,7 @@ const ExamSchedule = () => {
 
     fetchControl();
   }, []);
+
   return (
     <Fragment>
       <div className="xl:px-12 xs:px-5 lg:px-10 bg-white rounded-xl p-5 ">

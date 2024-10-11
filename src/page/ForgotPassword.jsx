@@ -1,23 +1,28 @@
+import { toast } from "react-toastify";
+import { BiLockAlt } from "react-icons/bi";
+import { useNavigate } from "react-router-dom";
+import AuthService from "../service/AuthService";
 import React, { Fragment, useState } from "react";
+import { Progress } from "../components/common/Progress";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import forgotPasswordValidationSchema from "../utils/validation/forgotPasswordValidation";
-import { Progress } from "../components/common/Progress";
-import { BiLockAlt } from "react-icons/bi";
-import AuthService from "../service/AuthService";
-import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+
 const ForgotPassword = () => {
-  const initialValues = {
-    email: "",
-  };
   let navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
 
+  const initialValues = {
+    email: "",
+  };
+
   const handleSubmit = async (values, { setSubmitting, setErrors }) => {
     setIsLoading(true);
+
     AuthService.forgotPassword(values)
       .then((response) => {
-        toast.success("We'll send you a recovery link to your email address shortly");
+        toast.success(
+          "We'll send you a recovery link to your email address shortly"
+        );
         setIsLoading(false);
         navigate("/login");
       })
@@ -26,6 +31,7 @@ const ForgotPassword = () => {
         toast.error("Something went Wrong!");
       });
   };
+
   return (
     <Fragment>
       <div className="h-[100vh] flex justify-center items-start w-full lg:pt-16 pt-5">

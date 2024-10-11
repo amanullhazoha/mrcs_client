@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { API } from "../config/axiosConfig";
+import Cookie from "js-cookie";
 import { CommonProgress } from "../components/common/CommonProgress";
 
 import CommonButton from "../components/common/CommonButton";
@@ -72,7 +73,7 @@ const Dashboard = () => {
       try {
         const response = await ControlService.getControl();
         const activeControl = response?.data?.filter(
-          (item) => item.status === "active",
+          (item) => item.status === "active"
         );
         setControl(activeControl);
       } catch (error) {
@@ -91,8 +92,8 @@ const Dashboard = () => {
     isError,
   } = useQuery("myData", () =>
     API.get("/category").then((res) =>
-      res.data.filter((item) => item.cat_status === "active"),
-    ),
+      res.data.filter((item) => item.cat_status === "active")
+    )
   );
 
   const {
@@ -101,8 +102,8 @@ const Dashboard = () => {
     isError: isRecallError,
   } = useQuery("recall_categories", () =>
     API.get("/recall-category").then((res) =>
-      res.data.filter((item) => item.cat_status === "active"),
-    ),
+      res.data.filter((item) => item.cat_status === "active")
+    )
   );
 
   const {
@@ -110,7 +111,7 @@ const Dashboard = () => {
     isReviewLoading,
     isReviewError,
   } = useQuery("reviews", () =>
-    API.get("/reviews/show").then((res) => res.data),
+    API.get("/reviews/show").then((res) => res.data)
   );
 
   const {
@@ -118,7 +119,7 @@ const Dashboard = () => {
     isLoginUserReviewLoading,
     isLoginUserReview,
   } = useQuery("myReview", () =>
-    API.get("/reviews/logged-in-user").then((res) => res.data),
+    API.get("/reviews/logged-in-user").then((res) => res.data)
   );
 
   const closeModal = () => {
@@ -164,7 +165,7 @@ const Dashboard = () => {
                   </span>
                 )}
               </div>
-            ) : null,
+            ) : null
           )}
         </div>
 
@@ -215,7 +216,7 @@ const Dashboard = () => {
             </CommonButton>
           </Link>
         </div>
-        
+
         <div className="grid lg:grid-cols-5 gap-6 md:grid-cols-2 sm:grid-cols-2 xs:grid-cols-2 mt-3 w-full items-center mx-auto">
           {study?.slice(0, 8).map((study, i) => (
             <Card
@@ -224,15 +225,17 @@ const Dashboard = () => {
               image={study?.image}
               title2={study?.study_title}
               link={`/allstudy/study/${study?._id} `}
-              disabled={study?.accessibility === "paid" && userType === "unpaid"}
+              disabled={
+                study?.accessibility === "paid" && userType === "unpaid"
+              }
             />
           ))}
         </div>
 
         <div className="w-full  mt-10 flex justify-between ">
           <span className="lg:text-xl xs:text-lg md:text-lg font-medium font-sans text-emerald-600 flex items-center gap-1.5">
-              <FaClipboardQuestion className="text-red-500" />
-             Recall Questions
+            <FaClipboardQuestion className="text-red-500" />
+            Recall Questions
           </span>
           <Link to="/all-recall-question">
             <CommonButton color="secondary" width={120} height={40}>
@@ -308,14 +311,17 @@ const Dashboard = () => {
           ))}
         </div> */}
 
-        {reviews?.length > 0 && (<ReviewCarousel reviews={reviews} />)}
+        {reviews?.length > 0 && <ReviewCarousel reviews={reviews} />}
 
         {isModalOpen && (
           <PopupModal isOpen={isModalOpen} onClose={closeModal} />
         )}
 
         {isReviewOpen && (
-          <ReviewModal isOpen={isReviewOpen} onClose={() => setIsReviewOpen(false)} />
+          <ReviewModal
+            isOpen={isReviewOpen}
+            onClose={() => setIsReviewOpen(false)}
+          />
         )}
       </div>
     </Fragment>

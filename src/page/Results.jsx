@@ -1,38 +1,32 @@
-//External Import
-import React, { Fragment, useEffect, useState } from "react";
-import { Box, Breadcrumbs, Stack } from "@mui/material";
-import { Link } from "react-router-dom";
-
 import { debounce } from "lodash";
-
-//Internal Import
-import PackageBreadcrumb from "../components/common/PackageBreadcrumb";
-import CustomSearchField from "../components/common/SearchField";
-
+import { Link } from "react-router-dom";
+import { BsTrophyFill } from "react-icons/bs";
+import resultHeader from "../constants/resultHeader";
+import { Box, Breadcrumbs, Stack } from "@mui/material";
 import QuestionService from "../service/QuestionService";
 import CommonTable from "../components/common/CommonTable";
-import resultHeader from "../constants/resultHeader";
-import { BsTrophyFill } from "react-icons/bs";
+import React, { Fragment, useEffect, useState } from "react";
+import CustomSearchField from "../components/common/SearchField";
+import PackageBreadcrumb from "../components/common/PackageBreadcrumb";
 
 const Results = () => {
   const [data, setData] = useState([]);
-  const [searchQuery, setSearchQuery] = useState("");
   const userid = localStorage.getItem("userid");
   const [isLoading, setIsLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
 
-  // Fetch User Data
   useEffect(() => {
     fetchData(userid);
   }, [userid]);
 
   const fetchData = async () => {
-    setIsLoading(true); // Set isLoading to true before fetching data
+    setIsLoading(true);
+
     try {
       const res = await QuestionService.getResult(userid);
       setData(res?.data?.results);
       setIsLoading(false);
     } catch (error) {
-      console.error("Error fetching data:", error);
       setIsLoading(false);
     }
   };
@@ -66,7 +60,6 @@ const Results = () => {
                 &nbsp; Result
               </Box>
             </Link>
-            {/* <Typography color="grey">sdfgh</Typography> */}
           </Breadcrumbs>
         </PackageBreadcrumb>
         <Stack
@@ -78,7 +71,6 @@ const Results = () => {
           }}
           justifyContent={"space-between"}
         >
-          {/* Search Box  */}
           <CustomSearchField
             name={"Search by QuizName"}
             onChange={handleSearchQueryChange}

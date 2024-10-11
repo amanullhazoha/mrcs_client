@@ -1,44 +1,41 @@
-//External Import
-import React, { Fragment } from "react";
-import { Box, Breadcrumbs } from "@mui/material";
+import Cookie from "js-cookie";
+import { Fragment } from "react";
+import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
-import UserService from "../service/UserService";
-
-//Internal Import
-import PackageBreadcrumb from "../components/common/PackageBreadcrumb";
-
+import { useEffect, useState } from "react";
+import { API } from "../config/axiosConfig";
 import Card from "../components/common/Card";
 import { BsBoxSeamFill } from "react-icons/bs";
-import { API } from "../config/axiosConfig";
-import { useQuery } from "react-query";
-import { CommonProgress } from "../components/common/CommonProgress";
+import { Box, Breadcrumbs } from "@mui/material";
+import UserService from "../service/UserService";
 import NotFound from "../components/common/NotFound";
-import { useEffect, useState } from "react";
+import { CommonProgress } from "../components/common/CommonProgress";
+import PackageBreadcrumb from "../components/common/PackageBreadcrumb";
 
 const RecallCategory = () => {
-  const [userType, setUserType] = useState("");
   const id = localStorage.getItem("userid");
+  const [userType, setUserType] = useState("");
+  const access_token = Cookie.get("mrcs_cookie");
 
-  // Fetch User Data
   useEffect(() => {
     const getUserData = async () => {
       try {
-        const res = await UserService.getSingleUser(id);
+        const res = await UserService.getSingleUser(access_token);
         setUserType(res?.data?.usertype);
       } catch (error) {
-        // Handle any error that might occur while fetching user data
         console.error("Error fetching user data:", error);
       }
     };
 
-    getUserData(id);
+    getUserData();
   }, [id]);
 
   const { data, isLoading, isError } = useQuery("recall-category-data", () =>
     API.get("/recall-category").then((res) =>
-      res.data.filter((item) => item.cat_status === "active"),
-    ),
+      res.data.filter((item) => item.cat_status === "active")
+    )
   );
+
   if (isLoading) {
     return (
       <div>
@@ -46,6 +43,7 @@ const RecallCategory = () => {
       </div>
     );
   }
+
   if (isError) {
     return (
       <div>
@@ -53,6 +51,7 @@ const RecallCategory = () => {
       </div>
     );
   }
+
   return (
     <Fragment>
       <div>
@@ -69,7 +68,6 @@ const RecallCategory = () => {
                 </span>
               </Box>
             </Link>
-            {/* <Typography color="grey">sdfgh</Typography> */}
           </Breadcrumbs>
         </PackageBreadcrumb>
         <div className="grid lg:grid-cols-5 gap-6 md:grid-cols-2 sm:grid-cols-2 xs:grid-cols-2 mt-5">
