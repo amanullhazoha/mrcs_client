@@ -29,11 +29,11 @@ const User = () => {
 
   const handlePClose = () => setPopen(false);
 
-  const fetchData = async (access_token) => {
+  const fetchData = async (token) => {
     try {
-      const res = await UserService.getSingleUser(access_token);
+      const res = await UserService.getSingleUser(token);
 
-      return res.data;
+      setData(res.data);
     } catch (error) {
       throw error;
     }
@@ -61,18 +61,10 @@ const User = () => {
   };
 
   useEffect(() => {
-    const getUserData = async () => {
-      try {
-        const userData = await fetchData();
-
-        setData(userData);
-      } catch (error) {
-        // Handle the error here or display an error message to the user.
-      }
-    };
-
-    getUserData();
+    fetchData(access_token);
   }, [access_token]);
+
+  // console.log(access_token, data);
 
   return (
     <Fragment>

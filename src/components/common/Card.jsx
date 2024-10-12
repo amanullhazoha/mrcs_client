@@ -18,6 +18,7 @@ const Card = ({
   const closeModal = () => {
     setIsModalOpen(false);
   };
+
   if (!disabled) {
     return (
       <Link to={link}>
@@ -60,6 +61,7 @@ const Card = ({
       </Link>
     );
   }
+
   return (
     <>
       <div
@@ -84,7 +86,7 @@ const Card = ({
             <img
               src={image}
               alt=""
-              className="shadow-sm  shadow-emerald-300 lg:w-40 lg:h-36 xs:w-36 xs:h-36  sm:w-32 sm:h-20  mt-4 border-[1px]  border-red-300 object-fill rounded-[30px] "
+              className="shadow-sm  shadow-emerald-300 w-40 h-36 xs:w-36 xs:h-36  border-[1px]  border-emerald-300 object-fill rounded-[30px] "
             />
           </div>
           <div className=" w-full border-b-2 border-solid border-slate-200 py-1"></div>

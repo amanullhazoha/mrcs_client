@@ -5,8 +5,6 @@ const ProtectedRoute = ({ children }) => {
   const token = localStorage.getItem("token");
   const access_token = Cookie.get("mrcs_cookie");
 
-  console.log(access_token);
-
   return access_token ? (
     <>
       <div>{children}</div>

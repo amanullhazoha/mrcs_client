@@ -237,6 +237,7 @@ const AddUser = ({ open, onClose, data, fetchData }) => {
                           type="email"
                           name="email"
                           id="email"
+                          disabled={true}
                           autoComplete="email"
                           value={values.email}
                           placeholder="Enter your Email Address"
