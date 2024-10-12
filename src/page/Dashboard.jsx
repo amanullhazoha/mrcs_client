@@ -1,5 +1,6 @@
 import Cookie from "js-cookie";
 import { hero } from "../assets";
+import { Button } from "@mui/material";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import { API } from "../config/axiosConfig";
@@ -186,7 +187,7 @@ const Dashboard = () => {
                       : "Making Your MRCS Journey Easiest"}
                   </span>
 
-                  <span className="text-center pt-4 lg:text-[25px] xs:text-[20px] text-[30px] xs:pl-0 items-center font-sans font-semibold inline-block bg-clip-text text-[#363431]">
+                  <span className="text-center lg:text-[25px] xs:text-[20px] text-[30px] xs:pl-0 items-center font-sans font-semibold inline-block bg-clip-text text-[#363431]">
                     {control
                       ? control[0]?.subtitle
                       : "If you never try, You will never win"}
@@ -293,25 +294,19 @@ const Dashboard = () => {
             Candidate's Feedback
           </span>
 
-          {userType === "paid" && !loginUserReview && (
-            <button type="button" onClick={() => setIsReviewOpen(true)}>
-              <CommonButton color="secondary" width={140} height={40}>
-                Add Review
-              </CommonButton>
+          {userType !== "paid" && !loginUserReview && (
+            // <div className="w-full">
+            <button
+              className="w-[230px] h-[40px] bg-red-600 text-white rounded-full font-bold font-[Roboto, Helvetica, Arial, sans-serif] hover:bg-red-500"
+              onClick={() => setIsReviewOpen(true)}
+            >
+              <span className="xs:text-xs md:text-sm lg:text-xs xl:text-sm">
+                ADD YOUR REVIEW
+              </span>
             </button>
+            // </div>
           )}
         </div>
-
-        {/* <div className="grid lg:grid-cols-2 gap-6 md:grid-cols-2 sm:grid-cols-1 xs:grid-cols-1 mt-3">
-          {reviews?.map((item) => (
-            <ReviewCard
-              review={item?.review}
-              rating={item?.rating}
-              user_name={item?.user_name}
-              image={item?.user_profile_image}
-            />
-          ))}
-        </div> */}
 
         {reviews?.length > 0 && <ReviewCarousel reviews={reviews} />}
 

@@ -3,7 +3,9 @@ import { Navigate } from "react-router-dom";
 
 const ProtectedRoute = ({ children }) => {
   const token = localStorage.getItem("token");
-  const access_token = Cookie.get("access_token");
+  const access_token = Cookie.get("mrcs_cookie");
+
+  console.log(access_token);
 
   return access_token ? (
     <>

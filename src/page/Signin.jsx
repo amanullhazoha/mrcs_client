@@ -293,7 +293,7 @@ const Signin = () => {
                       />
                       <Link to="/forgotpassword">
                         <p className="pt-3 text-blue-400 hover:text-blue-700">
-                          Forgot Password ?
+                          Forgot Password?
                         </p>
                       </Link>
                     </div>
@@ -323,7 +323,7 @@ const Signin = () => {
             <div className="pt-5">
               <Link to="/signup">
                 <span className="font-medium text-yellow-600 hover:text-yellow-700">
-                  {"Don't Have an account? Signup here "}
+                  {"Don't have an account? Sign up here!"}
                 </span>
               </Link>
             </div>

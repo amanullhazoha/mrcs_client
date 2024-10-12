@@ -38,10 +38,10 @@ const ForgotPassword = () => {
         <div className="bg-white  lg:w-[500px] w-full lg:py-20 lg:px-10 px-10 py-10  shadow-md rounded-md hover:shadow-lg">
           <div className="mb-6 sm:mx-auto sm:w-full sm:max-w-md">
             <h2 className="text-center text-xl font-extrabold text-gray-900">
-              Forgot Your Password ?
+              Forgot Your Password?
             </h2>
             <p className="text-sm text-center py-4">
-              Don't worry, Type your Email address and Submit{" "}
+              Don't worry, type your email address and submit
             </p>
           </div>
           <div>
@@ -66,7 +66,7 @@ const ForgotPassword = () => {
                         id="email"
                         autoComplete="email"
                         value={values.email}
-                        placeholder="Enter your Email Address"
+                        placeholder="Enter Your Email Address"
                         onChange={handleChange}
                         error={touched.email && errors.email}
                         className={`appearance-none block w-full px-3 py-2 border border-gray-300 

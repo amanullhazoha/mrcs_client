@@ -68,7 +68,7 @@ const ResetPassword = () => {
                           type={showPassword ? "text" : "password"}
                           name="newPassword"
                           id="newPassword"
-                          placeholder="Enter your new Password"
+                          placeholder="Enter Your New Password"
                           autoComplete="current-password"
                           value={values.newPassword}
                           onChange={handleChange}
@@ -109,7 +109,7 @@ const ResetPassword = () => {
                           type={showPassword ? "text" : "password"}
                           name="confirmPassword"
                           id="confirmPassword"
-                          placeholder="Enter your Password"
+                          placeholder="Enter Your Confirm Password"
                           autoComplete="current-password"
                           value={values.confirmPassword}
                           onChange={handleChange}

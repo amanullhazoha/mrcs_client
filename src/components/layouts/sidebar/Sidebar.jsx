@@ -8,13 +8,17 @@ import { MenuContext } from "../../../context/MenuContext";
 // * React icons
 
 import { AiFillTrophy, AiOutlineAppstore } from "react-icons/ai";
-import { BsBoxSeam, BsPassFill, BsPatchExclamationFill, BsPerson, BsQuestionDiamondFill } from "react-icons/bs";
+import {
+  BsBoxSeam,
+  BsPassFill,
+  BsPatchExclamationFill,
+  BsPerson,
+  BsQuestionDiamondFill,
+} from "react-icons/bs";
 import { GiBlackBook } from "react-icons/gi";
 import logo from "../../../assets/mrcs.png";
 import { MdOutlineQuiz } from "react-icons/md";
 import { RiQuestionnaireLine } from "react-icons/ri";
-
-
 
 const Sidebar = () => {
   let isTabletMid = useMediaQuery({ query: "(max-width: 768px)" });
@@ -22,7 +26,6 @@ const Sidebar = () => {
   const [open, setOpen] = useState(isTabletMid ? false : true);
   const sidebarRef = useRef();
   const { pathname } = useLocation();
-
 
   useEffect(() => {
     if (isTabletMid) {
@@ -48,7 +51,7 @@ const Sidebar = () => {
           },
         },
         closed: {
-          x: -250,
+          x: -248,
           width: 0,
           transition: {
             damping: 40,
@@ -91,9 +94,12 @@ const Sidebar = () => {
         <Link to="/">
           <div className="flex items-center gap-2.5 font-medium border-b py-3 border-slate-300  mx-3 z-50 bg-white">
             <img src={logo} width={45} alt="logo" />
-            <span className="text-2xl text-emerald-500 font-sans font-bold ">
-              MRCS AID
-            </span>
+
+            {isOpen && (
+              <span className="text-2xl text-emerald-500 font-sans font-bold ">
+                MRCS AID
+              </span>
+            )}
           </div>
         </Link>
 
@@ -140,7 +146,10 @@ const Sidebar = () => {
               </NavLink>
             </li>
             <li>
-              <NavLink to={"/all-recall-question"} className="link text-green-400">
+              <NavLink
+                to={"/all-recall-question"}
+                className="link text-green-400"
+              >
                 <MdOutlineQuiz size={23} className="min-w-max text-green-300" />
                 Recall Questions
               </NavLink>
@@ -160,31 +169,36 @@ const Sidebar = () => {
             </li>
             <li>
               <NavLink to={"/aboutus"} className="link text-green-400">
-                <BsPatchExclamationFill size={23} className="min-w-max text-green-400 " />
+                <BsPatchExclamationFill
+                  size={23}
+                  className="min-w-max text-green-400 "
+                />
                 About Us
               </NavLink>
             </li>
             <li>
               <NavLink to={"/terms"} className="link text-green-400">
-                < BsPassFill size={23} className="min-w-max text-green-400 " />
+                <BsPassFill size={23} className="min-w-max text-green-400 " />
                 Terms & Cond..
               </NavLink>
             </li>
 
             <li>
               <NavLink to={"/faq"} className="link text-green-400">
-                < RiQuestionnaireLine size={23} className="min-w-max text-green-400 " />
+                <RiQuestionnaireLine
+                  size={23}
+                  className="min-w-max text-green-400 "
+                />
                 FAQ
               </NavLink>
             </li>
 
             <li>
               <NavLink to={"/contact-us"} className="link text-green-400">
-                < BsPassFill size={23} className="min-w-max text-green-400 " />
+                <BsPassFill size={23} className="min-w-max text-green-400 " />
                 Contact Us
               </NavLink>
             </li>
-
           </ul>
         </div>
         {/* <motion.div
