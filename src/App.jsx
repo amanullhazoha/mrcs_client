@@ -1,39 +1,36 @@
+import Faq from "./page/FAQ";
+import ContactUs from "./page/ContactUs";
 import React, { lazy, Suspense } from "react";
+import RecallDetail from "./page/RecallDetail";
+import ExamSchedule from "./page/ExamSchedule";
 import { Route, Routes } from "react-router-dom";
+import RecallCategory from "./page/RecallCategory";
 import MainLayout from "./components/layouts/MainLayout";
 import { CommonProgress } from "./components/common/CommonProgress";
 import ProtectedRoute from "./components/protected/ProtectedRoute";
-import ExamSchedule from "./page/ExamSchedule";
-import Faq from "./page/FAQ";
-import ContactUs from "./page/ContactUs";
-import RecallDetail from "./page/RecallDetail";
-import RecallCategory from "./page/RecallCategory";
 
 const User = lazy(() => import("./page/User"));
-const Dashboard = lazy(() => import("./page/Dashboard"));
-const Category = lazy(() => import("./page/Category"));
-
-const Signin = lazy(() => import("./page/Signin"));
-
-const AllQuiz = lazy(() => import("./page/AllQuiz"));
-const AllRecall = lazy(() => import("./page/AllRecall"));
 const Quiz = lazy(() => import("./page/Quiz"));
-const Recall = lazy(() => import("./page/Recall"));
-const Results = lazy(() => import("./page/Results"));
 const Study = lazy(() => import("./page/Study"));
-const Questions = lazy(() => import("./page/Questions"));
-const TermsCondition = lazy(() => import("./page/TermsCondition"));
-const AboutUs = lazy(() => import("./page/AboutUs"));
-const ViewResult = lazy(() => import("./page/ViewResult"));
-const AllStudy = lazy(() => import("./page/AllStudy"));
 const Signup = lazy(() => import("./page/Signup"));
-const ForgotPassword = lazy(() => import("./page/ForgotPassword"));
+const Recall = lazy(() => import("./page/Recall"));
+const Signin = lazy(() => import("./page/Signin"));
+const Results = lazy(() => import("./page/Results"));
+const AboutUs = lazy(() => import("./page/AboutUs"));
+const AllQuiz = lazy(() => import("./page/AllQuiz"));
+const AllStudy = lazy(() => import("./page/AllStudy"));
+const Category = lazy(() => import("./page/Category"));
+const Dashboard = lazy(() => import("./page/Dashboard"));
+const AllRecall = lazy(() => import("./page/AllRecall"));
+const Questions = lazy(() => import("./page/Questions"));
+const ViewResult = lazy(() => import("./page/ViewResult"));
 const ResetPassword = lazy(() => import("./page/ResetPassword"));
+const TermsCondition = lazy(() => import("./page/TermsCondition"));
+const ForgotPassword = lazy(() => import("./page/ForgotPassword"));
 
 const App = () => {
   return (
     <Routes>
-      {/* Dashboard */}
       <Route
         path="/"
         element={
@@ -44,7 +41,6 @@ const App = () => {
           </MainLayout>
         }
       />
-      
       <Route
         path="/studyplan"
         element={
@@ -137,7 +133,6 @@ const App = () => {
           </MainLayout>
         }
       />
-
       {/* recall */}
       <Route
         path="/all-recall-question"
@@ -149,7 +144,6 @@ const App = () => {
           </MainLayout>
         }
       />
-
       <Route
         path="/recalls"
         element={
@@ -174,7 +168,6 @@ const App = () => {
           </ProtectedRoute>
         }
       />
-
       {/* Quiz */}
       <Route
         path="/allquiz"
@@ -280,7 +273,6 @@ const App = () => {
           </MainLayout>
         }
       />
-
       <Route
         path="/faq"
         element={
@@ -291,7 +283,6 @@ const App = () => {
           </MainLayout>
         }
       />
-
       <Route
         path="/contact-us"
         element={
@@ -302,7 +293,6 @@ const App = () => {
           </MainLayout>
         }
       />
-
       // ForgotPassword & Reset Password
       <Route
         path="/forgotpassword"

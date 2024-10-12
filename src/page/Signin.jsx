@@ -31,14 +31,14 @@ const Signin = () => {
       .then((response) => {
         setIsLoading(false);
 
-        localStorage.setItem("token", `${response.data.token}`);
-        localStorage.setItem("role", `${response.data?.role}`);
-        localStorage.setItem("email", `${response.data?.email}`);
-        localStorage.setItem("userid", `${response.data?.userid}`);
-        localStorage.setItem("username", `${response.data?.username}`);
-        localStorage.setItem("profile", `${response.data?.profile}`);
+        localStorage.setItem("token", `${response?.data?.token}`);
+        localStorage.setItem("role", `${response?.data?.role}`);
+        localStorage.setItem("email", `${response?.data?.email}`);
+        localStorage.setItem("userid", `${response?.data?.userid}`);
+        localStorage.setItem("username", `${response?.data?.username}`);
+        localStorage.setItem("profile", `${response?.data?.profile}`);
 
-        Cookie.set("mrcs_cookie", response.data.token);
+        Cookie.set("mrcs_cookie", response?.data?.token);
 
         toast.success("Successfully login");
         setSubmitting(false);

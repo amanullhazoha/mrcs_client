@@ -12,7 +12,6 @@ function ReviewModal({ isOpen, onClose }) {
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
-      console.log(values);
       const response = await ReviewService.addReview(values, access_token);
 
       if (response.status === 201) {

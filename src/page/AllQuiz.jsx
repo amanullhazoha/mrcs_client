@@ -38,9 +38,10 @@ const AllQuiz = () => {
       }
     };
 
-    getUserData(id);
+    getUserData();
+
     fetchData();
-  }, [id]);
+  }, [access_token]);
 
   return (
     <Fragment>

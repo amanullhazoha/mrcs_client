@@ -34,7 +34,7 @@ const Quiz = () => {
     };
 
     getUserData();
-  }, [token]);
+  }, [access_token]);
 
   return (
     <Fragment>

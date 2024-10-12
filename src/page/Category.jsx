@@ -17,6 +17,12 @@ const Category = () => {
   const [userType, setUserType] = useState("");
   const access_token = Cookie.get("mrcs_cookie");
 
+  const { data, isLoading, isError } = useQuery("myData", () =>
+    API.get("/category").then((res) =>
+      res.data.filter((item) => item.cat_status === "active")
+    )
+  );
+
   useEffect(() => {
     const getUserData = async () => {
       try {
@@ -28,14 +34,8 @@ const Category = () => {
       }
     };
 
-    getUserData(id);
-  }, [id]);
-
-  const { data, isLoading, isError } = useQuery("myData", () =>
-    API.get("/category").then((res) =>
-      res.data.filter((item) => item.cat_status === "active")
-    )
-  );
+    getUserData();
+  }, [access_token]);
 
   if (isLoading) {
     return (

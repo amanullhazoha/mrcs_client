@@ -1,26 +1,26 @@
-import { Popover, List, ListItem } from "@mui/material";
-import React, { useContext, useState, useEffect } from "react";
-import { FiUser } from "react-icons/fi";
-import { FaUserAlt } from "react-icons/fa";
-import { TbLogout } from "react-icons/tb";
-
-import { MdMenu } from "react-icons/md";
-
-//Internal import .................
-import { MenuContext } from "../../../context/MenuContext";
-import AuthService from "../../../service/AuthService";
-import { Link } from "react-router-dom";
-
-import UserService from "../../../service/UserService";
-import PopupModal from "../../common/PopupModal";
-import { logo } from "../../../assets/image";
 import Cookie from "js-cookie";
+import { FiUser } from "react-icons/fi";
+import { MdMenu } from "react-icons/md";
+import { Link } from "react-router-dom";
+import { TbLogout } from "react-icons/tb";
+import { FaUserAlt } from "react-icons/fa";
+import { logo } from "../../../assets/image";
+import PopupModal from "../../common/PopupModal";
+import UserService from "../../../service/UserService";
+import AuthService from "../../../service/AuthService";
+import { Popover, List, ListItem } from "@mui/material";
+import { MenuContext } from "../../../context/MenuContext";
+import React, { useContext, useState, useEffect } from "react";
 
 const Navbar = () => {
+  const id = localStorage.getItem("userid");
   const access_token = Cookie.get("mrcs_cookie");
+
+  const [usertype, setUsertype] = useState();
+  const token = localStorage.getItem("token");
+  const profile = localStorage.getItem("profile");
   const { toggleMenu } = useContext(MenuContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const [userAnchorEl, setUserAnchorEl] = useState(null);
 
   const handleUserClick = (event) => {
@@ -30,13 +30,14 @@ const Navbar = () => {
   const handleClose = () => {
     setUserAnchorEl(null);
   };
+
   const handleLogout = async () => {
     AuthService.handleLogout();
   };
-  const profile = localStorage.getItem("profile");
-  const token = localStorage.getItem("token");
-  const id = localStorage.getItem("userid");
-  const [usertype, setUsertype] = useState();
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   useEffect(() => {
     const getUserData = async () => {
@@ -45,7 +46,6 @@ const Navbar = () => {
 
         setUsertype(res?.data);
       } catch (error) {
-        // Handle any error that might occur while fetching user data
         console.error("Error fetching user data:", error);
       }
     };
@@ -53,16 +53,11 @@ const Navbar = () => {
     getUserData();
   }, [access_token]);
 
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
-
   return (
     <nav
       className={`sticky top-0  bg-gradient-to-r from-emerald-200 via-emerald-500 to-emerald-300 text-white w-full flex items-center justify-between px-2 py-3 md:px-2 shadow-sm `}
     >
       <div className="flex justify-between w-full lg:px-8 xs:px-2 sm:px-3">
-        {/* Left Sidebar */}
         <div className="flex items-center">
           <div
             className="w-8 h-8 bg-green-500   flex p-2 rounded-full mr-3 focus:bg-gray-400 hover:bg-green-600 shadow-md  "
@@ -77,9 +72,8 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* Right Side */}
         <div className="flex items-center ">
-          {token && usertype?.usertype === "unpaid" ? (
+          {access_token && usertype?.usertype === "unpaid" ? (
             <button
               className="py-2 rounded-full w-full  px-4 mr-4  bg-gradient-to-r from-pink-500 to-indigo-400 text-[10px] lg:text-[14px] font-semibold text-white "
               onClick={() => setIsModalOpen(true)}
@@ -90,8 +84,7 @@ const Navbar = () => {
             ""
           )}
 
-          {/* Profile Button */}
-          {usertype ? (
+          {access_token || usertype ? (
             <div
               className="flex items-center justify-center   rounded-full text-white shadow-md hover:shadow-lg hover:shadow-emerald-600 hover:text-indigo-50 transition duration-150 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-green-100 focus:ring-green-500"
               onClick={handleUserClick}
@@ -133,7 +126,6 @@ const Navbar = () => {
             </div>
           )}
 
-          {/* User Popover  */}
           <Popover
             open={Boolean(userAnchorEl)}
             anchorEl={userAnchorEl}

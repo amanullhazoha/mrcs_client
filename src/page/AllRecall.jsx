@@ -40,9 +40,10 @@ const AllRecall = () => {
       }
     };
 
-    getUserData(id);
+    getUserData();
+
     fetchData();
-  }, [id]);
+  }, [access_token]);
 
   return (
     <Fragment>
