@@ -1,4 +1,5 @@
 import Cookie from "js-cookie";
+import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import Card from "../components/common/Card";
 import { MdOutlineQuiz } from "react-icons/md";
@@ -47,6 +48,18 @@ const AllRecall = () => {
 
   return (
     <Fragment>
+      <Helmet>
+        <title>
+          MRCS Part A Recall Question Bank | Extensive Collection with
+          Explanations
+        </title>
+
+        <meta
+          name="description"
+          content="Explore a vast recall question bank for the MRCS Part A exam, complete with detailed explanations. Strengthen your understanding and improve your chances of success."
+        />
+      </Helmet>
+
       <div>
         <PackageBreadcrumb>
           <Breadcrumbs aria-label="breadcrumb">

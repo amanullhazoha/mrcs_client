@@ -1,5 +1,6 @@
 import Cookie from "js-cookie";
 import { hero } from "../assets";
+import { Helmet } from "react-helmet";
 import { Button } from "@mui/material";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
@@ -148,6 +149,18 @@ const Dashboard = () => {
 
   return (
     <Fragment>
+      <Helmet>
+        <title>
+          S Part A Exam Preparation | Comprehensive Resources and Study Guides -
+          mrcsaid.com
+        </title>
+
+        <meta
+          name="description"
+          content="Prepare for the MRCS Part A exam with mrcsaid.com. Access expert guidelines, study tips, mock tests, and an extensive recall question bank to boost your success."
+        />
+      </Helmet>
+
       <div className="xl:px-12 xs:px-0 lg:px-10">
         <div className="flex lg:flex-row md:flex-row space-x-5 xs:flex-col border-2 rounded-lg mb-8">
           {slider?.map((slider, i) =>

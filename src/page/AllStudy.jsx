@@ -1,9 +1,10 @@
 import Cookie from "js-cookie";
-import React, { Fragment, useEffect, useState } from "react";
-import { Box, Breadcrumbs } from "@mui/material";
+import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
-import ShuffleArray from "../constants/ShuffleArray";
+import { Box, Breadcrumbs } from "@mui/material";
 import UserService from "../service/UserService";
+import ShuffleArray from "../constants/ShuffleArray";
+import React, { Fragment, useEffect, useState } from "react";
 
 //Internal Import
 import PackageBreadcrumb from "../components/common/PackageBreadcrumb";
@@ -59,6 +60,17 @@ const AllStudy = () => {
 
   return (
     <Fragment>
+      <Helmet>
+        <title>
+          MRCS Part A Study Material | Comprehensive Notes and Resources
+        </title>
+
+        <meta
+          name="description"
+          content="Access detailed study notes and essential resources tailored for the MRCS Part A exam at mrcsaid.com. Enhance your preparation with our expertly curated materials."
+        />
+      </Helmet>
+
       <div>
         <PackageBreadcrumb>
           <Breadcrumbs aria-label="breadcrumb">

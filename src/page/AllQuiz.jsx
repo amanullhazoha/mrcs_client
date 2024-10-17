@@ -1,4 +1,5 @@
 import Cookie from "js-cookie";
+import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import Card from "../components/common/Card";
 import { MdOutlineQuiz } from "react-icons/md";
@@ -45,6 +46,17 @@ const AllQuiz = () => {
 
   return (
     <Fragment>
+      <Helmet>
+        <title>
+          MRCS Part A Mock Tests | eMRCS-Based Practice Exams and Recall Tests
+        </title>
+
+        <meta
+          name="description"
+          content="Prepare effectively for the MRCS Part A with our eMRCS-based mock exams and recall tests. Test your knowledge and track your progress with realistic practice exams."
+        />
+      </Helmet>
+
       <div>
         <PackageBreadcrumb>
           <Breadcrumbs aria-label="breadcrumb">

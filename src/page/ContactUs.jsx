@@ -20,7 +20,6 @@ const ContactUs = () => {
         toast.error("Something went wrong while sending the message");
       }
     } catch (error) {
-      console.log("Error while sending message: ", error);
       toast.error("Something went wrong while sending the message");
     } finally {
       setSubmitting(false);
@@ -62,7 +61,7 @@ const ContactUs = () => {
                     <Field
                       type="text"
                       name="full_name"
-                      placeholder="Enter full name"
+                      placeholder="Enter your full name"
                       error={touched.full_name && errors.full_name}
                       className={`appearance-none block w-full px-3 py-2 border border-gray-300 
                                       rounded-md shadow-sm placeholder-gray-400 
@@ -149,7 +148,7 @@ const ContactUs = () => {
                     <Field
                       type="text"
                       name="subject"
-                      placeholder="Enter your contact subject"
+                      placeholder="Enter your subject"
                       error={touched.subject && errors.subject}
                       className={`appearance-none block w-full px-3 py-2 border border-gray-300 
                                       rounded-md shadow-sm placeholder-gray-400 
@@ -180,7 +179,7 @@ const ContactUs = () => {
                       name="message"
                       rows="4"
                       cols="50"
-                      placeholder="Enter your contact subject"
+                      placeholder="Type your message"
                       onChange={(e) => setFieldValue("message", e.target.value)}
                       className={`appearance-none block w-full px-3 py-2 border border-gray-300 
                                 rounded-md shadow-sm placeholder-gray-400 

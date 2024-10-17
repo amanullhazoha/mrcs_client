@@ -20,8 +20,13 @@ const deleteQuestion = (id) => {
   return API.delete(`/questions/delete/${id}`);
 };
 
-const addResult = (values) => {
-  return API.post("/result/add", values);
+const addResult = (values, token) => {
+  return API.post("/result/add", values, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  });
 };
 
 const getResultbyId = (id) => {

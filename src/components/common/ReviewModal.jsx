@@ -109,7 +109,7 @@ function ReviewModal({ isOpen, onClose }) {
                   name="review"
                   rows="4"
                   cols="50"
-                  placeholder="Enter your contact subject"
+                  placeholder="Enter your valuable review"
                   onChange={(e) => setFieldValue("review", e.target.value)}
                   className={`appearance-none block w-full px-3 py-4 border border-gray-300 
                                 rounded-md shadow-sm placeholder-gray-400 focus:ring-green-500

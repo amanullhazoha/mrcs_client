@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet";
 import React, { Fragment } from "react";
 import { Box, Breadcrumbs } from "@mui/material";
 import { BsFillPatchExclamationFill } from "react-icons/bs";
@@ -6,6 +7,17 @@ import PackageBreadcrumb from "../components/common/PackageBreadcrumb";
 const AboutUs = () => {
   return (
     <Fragment>
+      <Helmet>
+        <title>
+          About Us | mrcsaid.com - Your Partner in MRCS Part A Exam Success
+        </title>
+
+        <meta
+          name="description"
+          content="Learn more about mrcsaid.com, your trusted source for MRCS Part A exam preparation. Discover our mission to provide high-quality study materials, mock tests, and recall questions."
+        />
+      </Helmet>
+
       <div>
         <PackageBreadcrumb>
           <Breadcrumbs aria-label="breadcrumb">

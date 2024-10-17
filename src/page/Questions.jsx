@@ -1,3 +1,4 @@
+import Cookie from "js-cookie";
 import { Link } from "react-router-dom";
 import { API } from "../config/axiosConfig";
 import { useLocation } from "react-router-dom";
@@ -22,6 +23,7 @@ import {
 
 const Questions = () => {
   const location = useLocation();
+  const access_token = Cookie.get("mrcs_cookie");
   const id = new URLSearchParams(location.search).get("id");
 
   const [questions, setQuestions] = useState([]);
@@ -99,7 +101,7 @@ const Questions = () => {
         )
       );
 
-      const response = await QuestionService.addResult(payload);
+      const response = await QuestionService.addResult(payload, access_token);
 
       if (response.status === 200) {
         setQid(response?.data?.resultdata?._id);
@@ -125,8 +127,14 @@ const Questions = () => {
   useEffect(() => {
     const fetchQuestions = async () => {
       setIsLoading2(true);
+
       try {
-        const response = await API.get(`/questions/questionbyquiz?quiz=${id}`);
+        const response = await API.get(`/questions/questionbyquiz?quiz=${id}`, {
+          headers: {
+            Authorization: `Bearer ${access_token}`,
+            "Content-Type": "application/json",
+          },
+        });
 
         setQuestions([...response.data]);
         setIsLoading2(false);
