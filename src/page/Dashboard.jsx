@@ -234,18 +234,27 @@ const Dashboard = () => {
         </div>
 
         <div className="grid lg:grid-cols-5 gap-6 md:grid-cols-2 sm:grid-cols-2 xs:grid-cols-2 mt-3 w-full items-center mx-auto">
-          {study?.slice(0, 8).map((study, i) => (
-            <Card
-              key={i}
-              title={study?.study_name}
-              image={study?.image}
-              title2={study?.study_title}
-              link={`/allstudy/study/${study?._id} `}
-              disabled={
-                study?.accessibility === "paid" && userType === "unpaid"
-              }
-            />
-          ))}
+          {study
+            ?.slice(0, 8)
+            ?.sort((a, b) =>
+              a.accessibility === b.accessibility
+                ? 0
+                : a.accessibility === "unpaid"
+                ? -1
+                : 1
+            )
+            .map((study, i) => (
+              <Card
+                key={i}
+                title={study?.study_name}
+                image={study?.image}
+                title2={study?.study_title}
+                link={`/allstudy/study/${study?._id} `}
+                disabled={
+                  study?.accessibility === "paid" && userType === "unpaid"
+                }
+              />
+            ))}
         </div>
 
         <div className="w-full  mt-10 flex justify-between ">
@@ -261,17 +270,28 @@ const Dashboard = () => {
         </div>
 
         <div className="grid lg:grid-cols-5 gap-6 md:grid-cols-2 sm:grid-cols-2 xs:grid-cols-2 mt-3">
-          {recallCategories?.slice(0, 8).map((item) => (
-            <Card
-              number={""}
-              key={item._id}
-              title2={"recall questions"}
-              image={item?.image}
-              title={item?.cat_name}
-              link={`/recall-category/recall?category=${item?.cat_name}`}
-              disabled={item?.accessibility === "paid" && userType === "unpaid"}
-            />
-          ))}
+          {recallCategories
+            ?.slice(0, 8)
+            ?.sort((a, b) =>
+              a.accessibility === b.accessibility
+                ? 0
+                : a.accessibility === "unpaid"
+                ? -1
+                : 1
+            )
+            .map((item) => (
+              <Card
+                number={""}
+                key={item._id}
+                title2={"recall questions"}
+                image={item?.image}
+                title={item?.cat_name}
+                link={`/recall-category/recall?category=${item?.cat_name}`}
+                disabled={
+                  item?.accessibility === "paid" && userType === "unpaid"
+                }
+              />
+            ))}
         </div>
 
         <div className="w-full  mt-10 flex justify-between ">
@@ -287,17 +307,28 @@ const Dashboard = () => {
         </div>
 
         <div className="grid lg:grid-cols-5 gap-6 md:grid-cols-2 sm:grid-cols-2 xs:grid-cols-2 mt-3">
-          {popularquiz?.slice(0, 8).map((item) => (
-            <Card
-              number={""}
-              key={item._id}
-              title2={"quizes"}
-              image={item?.image}
-              title={item?.cat_name}
-              link={`/category/quiz?category=${item?.cat_name}`}
-              disabled={item?.accessibility === "paid" && userType === "unpaid"}
-            />
-          ))}
+          {popularquiz
+            ?.slice(0, 8)
+            ?.sort((a, b) =>
+              a.accessibility === b.accessibility
+                ? 0
+                : a.accessibility === "unpaid"
+                ? -1
+                : 1
+            )
+            ?.map((item) => (
+              <Card
+                number={""}
+                key={item._id}
+                title2={"quizes"}
+                image={item?.image}
+                title={item?.cat_name}
+                link={`/category/quiz?category=${item?.cat_name}`}
+                disabled={
+                  item?.accessibility === "paid" && userType === "unpaid"
+                }
+              />
+            ))}
         </div>
 
         <div className="w-full mt-10 pt-5 flex justify-between bg-[#FAF6E8] rounded-t-lg">

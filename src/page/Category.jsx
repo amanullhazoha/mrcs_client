@@ -72,17 +72,27 @@ const Category = () => {
           </Breadcrumbs>
         </PackageBreadcrumb>
         <div className="grid lg:grid-cols-5 gap-6 md:grid-cols-2 sm:grid-cols-2 xs:grid-cols-2 mt-5">
-          {data?.map((item) => (
-            <Card
-              number={""}
-              title={item?.cat_name}
-              key={item._id}
-              title2={"quizes"}
-              image={item?.image}
-              link={`/category/quiz?category=${item?.cat_name}`}
-              disabled={item?.accessibility === "paid" && userType === "unpaid"}
-            />
-          ))}
+          {data
+            ?.sort((a, b) =>
+              a.accessibility === b.accessibility
+                ? 0
+                : a.accessibility === "unpaid"
+                ? -1
+                : 1
+            )
+            ?.map((item) => (
+              <Card
+                number={""}
+                title={item?.cat_name}
+                key={item._id}
+                title2={"quizes"}
+                image={item?.image}
+                link={`/category/quiz?category=${item?.cat_name}`}
+                disabled={
+                  item?.accessibility === "paid" && userType === "unpaid"
+                }
+              />
+            ))}
         </div>
       </div>
     </Fragment>

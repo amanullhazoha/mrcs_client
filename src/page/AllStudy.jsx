@@ -89,18 +89,26 @@ const AllStudy = () => {
           </div>
         ) : (
           <div className="grid lg:grid-cols-5 gap-4 md:grid-cols-2 sm:grid-cols-2 xs:grid-cols-2  mt-5">
-            {data?.map((study, i) => (
-              <Card
-                key={i}
-                title={study?.study_name}
-                image={study?.image}
-                title2={study?.study_title}
-                link={`/allstudy/study/${study?._id} `}
-                disabled={
-                  study?.accessibility === "paid" && userType === "unpaid"
-                }
-              />
-            ))}
+            {data
+              ?.sort((a, b) =>
+                a.accessibility === b.accessibility
+                  ? 0
+                  : a.accessibility === "unpaid"
+                  ? -1
+                  : 1
+              )
+              ?.map((study, i) => (
+                <Card
+                  key={i}
+                  title={study?.study_name}
+                  image={study?.image}
+                  title2={study?.study_title}
+                  link={`/allstudy/study/${study?._id} `}
+                  disabled={
+                    study?.accessibility === "paid" && userType === "unpaid"
+                  }
+                />
+              ))}
           </div>
         )}
       </div>

@@ -83,19 +83,27 @@ const AllRecall = () => {
           </div>
         ) : (
           <div className="grid lg:grid-cols-5 gap-5 md:grid-cols-2 sm:grid-cols-2 xs:grid-cols-2 mt-5">
-            {data.map((recall, i) => (
-              <Card
-                key={i}
-                title={recall?.recall_name}
-                number={""}
-                image={recall?.image}
-                title2={"Question"}
-                link={`/recall-detail?id=${recall?._id}`}
-                disabled={
-                  recall?.accessibility === "paid" && userType === "unpaid"
-                }
-              />
-            ))}
+            {data
+              ?.sort((a, b) =>
+                a.accessibility === b.accessibility
+                  ? 0
+                  : a.accessibility === "unpaid"
+                  ? -1
+                  : 1
+              )
+              ?.map((recall, i) => (
+                <Card
+                  key={i}
+                  title={recall?.recall_name}
+                  number={""}
+                  image={recall?.image}
+                  title2={"Question"}
+                  link={`/recall-detail?id=${recall?._id}`}
+                  disabled={
+                    recall?.accessibility === "paid" && userType === "unpaid"
+                  }
+                />
+              ))}
           </div>
         )}
       </div>

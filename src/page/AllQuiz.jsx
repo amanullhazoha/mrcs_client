@@ -78,19 +78,27 @@ const AllQuiz = () => {
           </div>
         ) : (
           <div className="grid lg:grid-cols-5 gap-5 md:grid-cols-2 sm:grid-cols-2 xs:grid-cols-2 mt-5">
-            {data.map((quiz, i) => (
-              <Card
-                key={i}
-                title={quiz?.quiz_name}
-                number={""}
-                image={quiz?.image}
-                title2={"Question"}
-                link={`/questions?id=${quiz?.quiz_name}`}
-                disabled={
-                  quiz?.accessibility === "paid" && userType === "unpaid"
-                }
-              />
-            ))}
+            {data
+              ?.sort((a, b) =>
+                a.accessibility === b.accessibility
+                  ? 0
+                  : a.accessibility === "unpaid"
+                  ? -1
+                  : 1
+              )
+              ?.map((quiz, i) => (
+                <Card
+                  key={i}
+                  title={quiz?.quiz_name}
+                  number={""}
+                  image={quiz?.image}
+                  title2={"Question"}
+                  link={`/questions?id=${quiz?.quiz_name}`}
+                  disabled={
+                    quiz?.accessibility === "paid" && userType === "unpaid"
+                  }
+                />
+              ))}
           </div>
         )}
       </div>

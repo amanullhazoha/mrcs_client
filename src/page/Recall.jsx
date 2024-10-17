@@ -69,20 +69,28 @@ const Recall = () => {
           <div>
             {data ? (
               <div className="grid lg:grid-cols-5 gap-5 md:grid-cols-2 sm:grid-cols-2 xs:grid-cols-2 mt-5">
-                {data?.map((item) => (
-                  <Card
-                    title={item?.recall_name}
-                    number={""}
-                    image={item?.image}
-                    desc={item?.recall_description}
-                    title2={"questions"}
-                    link={`/recall-detail?id=${item?._id}`}
-                    key={item?._id}
-                    disabled={
-                      item?.accessibility === "paid" && userType === "unpaid"
-                    }
-                  />
-                ))}
+                {data
+                  ?.sort((a, b) =>
+                    a.accessibility === b.accessibility
+                      ? 0
+                      : a.accessibility === "unpaid"
+                      ? -1
+                      : 1
+                  )
+                  ?.map((item) => (
+                    <Card
+                      title={item?.recall_name}
+                      number={""}
+                      image={item?.image}
+                      desc={item?.recall_description}
+                      title2={"questions"}
+                      link={`/recall-detail?id=${item?._id}`}
+                      key={item?._id}
+                      disabled={
+                        item?.accessibility === "paid" && userType === "unpaid"
+                      }
+                    />
+                  ))}
               </div>
             ) : (
               <NotFound />
