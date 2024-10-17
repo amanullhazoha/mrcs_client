@@ -1,8 +1,9 @@
-//External Import
+import Cookie from "js-cookie";
 import React, { Fragment, useEffect, useState } from "react";
 import { Box, Breadcrumbs } from "@mui/material";
 import { Link } from "react-router-dom";
 import ShuffleArray from "../constants/ShuffleArray";
+import UserService from "../service/UserService";
 
 //Internal Import
 import PackageBreadcrumb from "../components/common/PackageBreadcrumb";
@@ -14,6 +15,8 @@ import { BsBookFill } from "react-icons/bs";
 import { CommonProgress } from "../components/common/CommonProgress";
 const AllStudy = () => {
   const [data, setData] = useState([]);
+  const [userType, setUserType] = useState("");
+  const access_token = Cookie.get("mrcs_cookie");
   const [isLoading, setIsLoading] = useState(true);
 
   // Fetch User Data
@@ -30,6 +33,29 @@ const AllStudy = () => {
     };
     fetchData();
   }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await QuizService.getQuiz();
+
+        setData(res.data);
+        setIsLoading(false);
+      } catch (error) {
+        setIsLoading(false);
+      }
+    };
+
+    const getUserData = async () => {
+      try {
+        const res = await UserService.getSingleUser(access_token);
+
+        setUserType(res?.data?.usertype);
+      } catch (error) {}
+    };
+
+    getUserData();
+  }, [access_token]);
 
   return (
     <Fragment>
@@ -58,6 +84,9 @@ const AllStudy = () => {
                 image={study?.image}
                 title2={study?.study_title}
                 link={`/allstudy/study/${study?._id} `}
+                disabled={
+                  study?.accessibility === "paid" && userType === "unpaid"
+                }
               />
             ))}
           </div>

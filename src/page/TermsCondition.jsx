@@ -24,58 +24,121 @@ const TermsCondition = () => {
           <div className="bg-emerald-400 rounded-t-md h-12 text-xl text-white font-bold font-sans  flex justify-center items-center">
             Terms & Conditions
           </div>
+
           <div className="px-8 py-4 flex flex-col ">
+            <p className="text-lg font-small font-sans my-3">
+              Last Updated: [22/08/2024]
+            </p>
+
+            <span className="text-lg font-small font-sans ">
+              {`Welcome to MRCS Aid! These Terms and Conditions govern your use of our website (https://www.mrcsaid.com) and services. By accessing or using MRCS Aid, you agree to comply with and be bound by the following terms. If you do not agree with these terms, please do not use our website or services.`}
+            </span>
+
             <span className="text-2xl font-medium font-sans py-2 text-emerald-500">
-              Introduction{" "}
+              1. Acceptance of Terms
             </span>
             <span className="text-lg font-small font-sans ">
-              {`Welcome to MRCS Aid
-              These Terms of Service govern your use of our website located at www.mrcsaid.com (together
-              or individually “Service”) operated by MRCS Aid.
-              Our Privacy Policy also governs your use of our Service and explains how we collect, safeguard
-              and disclose information that results from your use of our web pages.
-              Your agreement with us includes these Terms and our Privacy Policy (“Agreements”). You
-              acknowledge that you have read and understood Agreements, and agree to be bound of them.
-              If you do not agree with (or cannot comply with) Agreements, then you may not use the Service,
-              but please let us know by emailing at contact@mrcsaid.com so we can try to find a solution.
-              These Terms apply to all visitors, users and others who wish to access or use Service.`}
+              {`By accessing or using MRCS Aid, you confirm that you have read, understood, and agree to be bound by these Terms and Conditions. These terms apply to all visitors, users, and others who access or use the service.`}
             </span>
           </div>
+
           <div className="px-8 py-4 flex flex-col ">
             <span className="text-2xl font-medium font-sans py-2 text-emerald-500">
-              Communications{" "}
+              2. Use of Website
             </span>
             <span className="text-lg font-small font-sans ">
-              {`By using our Service, you agree to subscribe to newsletters, marketing or promotional materials
-              and other information we may send. However, you may opt out of receiving any, or all, of these
-              communications from us by following the unsubscribe link or by emailing at
-              contact@mrcsaid.com.
+              {`You agree to use the website only for lawful purposes. You are prohibited from violating or attempting to violate the security of the website or using it to infringe on the rights of others.
             `}
             </span>
           </div>
+
           <div className="px-8 py-4 flex flex-col ">
             <span className="text-2xl font-medium font-sans py-2 text-emerald-500">
-              Why MRCS Aid?{" "}
+              3. Intellectual Property
             </span>
             <span className="text-lg font-small font-sans ">
-              {`
-              This is a trillion dollar question! Already you know that, from the very beginning of our journey, we are
-              trying hard to provide top-notch study materials to our users. It is our mission, it is our passion and it is
-              our goal to help our users to pass MRCS-A on first attempt by providing the proper guideline to our
-              users.`}
+              {`All content on MRCS Aid, including but not limited to text, graphics, logos, images, videos, and software, is the property of MRCS Aid and is protected by copyright, trademark, and other intellectual property laws. You may not reproduce, distribute, modify, or create derivative works of any material found on this website without prior written permission from MRCS Aid.`}
             </span>
           </div>
+
           <div className="px-8 py-4 flex flex-col ">
             <span className="text-2xl font-medium font-sans py-2 text-emerald-500">
-              Future Plan
+              4. User Accounts
             </span>
             <span className="text-lg font-small font-sans ">
-              {`
-              According to our goal, we are continuously trying to improve our content and make it easiest for you to
-              pass MRCS-A. We hope you have enjoyed our content as much as we enjoy offering them to you. If you
-              have any questions or comments, please don't hesitate to Contact Us by E-mail. Feel free to share any
-              recommendations, errors, or other information's. You are always welcome. We appreciate your time
-              and patience. Thank you for reading about MRCS Aid.`}
+              {`To access certain features of the website, you may be required to create an account. You are responsible for maintaining the confidentiality of your account information, including your password. You agree to accept responsibility for all activities that occur under your account.`}
+            </span>
+          </div>
+
+          <div className="px-8 py-4 flex flex-col ">
+            <span className="text-2xl font-medium font-sans py-2 text-emerald-500">
+              5. Payment and Subscription
+            </span>
+            <span className="text-lg font-small font-sans ">
+              {`Some services offered on MRCS Aid may require payment or subscription. By purchasing a service, you agree to provide accurate and complete payment information. All fees are non-refundable unless otherwise stated.`}
+            </span>
+          </div>
+
+          <div className="px-8 py-4 flex flex-col ">
+            <span className="text-2xl font-medium font-sans py-2 text-emerald-500">
+              6. Advertising
+            </span>
+            <span className="text-lg font-small font-sans ">
+              {`MRCS Aid reserves the right to display advertisements to all users, including paid users. These advertisements may be tailored to your interests based on your usage of the website. By using our website, you agree to the display of such advertisements.`}
+            </span>
+          </div>
+
+          <div className="px-8 py-4 flex flex-col ">
+            <span className="text-2xl font-medium font-sans py-2 text-emerald-500">
+              7. Limitation of Liability
+            </span>
+            <span className="text-lg font-small font-sans ">
+              {`MRCS Aid strives to ensure that the information provided on this website is accurate and up-to-date. However, we do not warrant the accuracy, completeness, or usefulness of this information. In no event shall MRCS Aid or its affiliates be liable for any direct, indirect, incidental, special, or consequential damages arising out of or in connection with your use of the website.`}
+            </span>
+          </div>
+
+          <div className="px-8 py-4 flex flex-col ">
+            <span className="text-2xl font-medium font-sans py-2 text-emerald-500">
+              8. Third-Party Links
+            </span>
+            <span className="text-lg font-small font-sans ">
+              {`Our website may contain links to third-party websites that are not owned or controlled by MRCS Aid. We have no control over, and assume no responsibility for, the content, privacy policies, or practices of any third-party sites.`}
+            </span>
+          </div>
+
+          <div className="px-8 py-4 flex flex-col ">
+            <span className="text-2xl font-medium font-sans py-2 text-emerald-500">
+              9. Termination
+            </span>
+            <span className="text-lg font-small font-sans ">
+              {`We may terminate or suspend your access to the website and its services, without prior notice or liability, for any reason whatsoever, including, without limitation, if you breach these Terms and Conditions.`}
+            </span>
+          </div>
+
+          <div className="px-8 py-4 flex flex-col ">
+            <span className="text-2xl font-medium font-sans py-2 text-emerald-500">
+              10. Changes to Terms
+            </span>
+            <span className="text-lg font-small font-sans ">
+              {`MRCS Aid reserves the right to modify or replace these Terms and Conditions at any time. We will notify you of any changes by posting the new terms on this page. Your continued use of the website after any changes to the Terms and Conditions constitutes your acceptance of the new terms.`}
+            </span>
+          </div>
+
+          <div className="px-8 py-4 flex flex-col ">
+            <span className="text-2xl font-medium font-sans py-2 text-emerald-500">
+              11. Governing Law
+            </span>
+            <span className="text-lg font-small font-sans ">
+              {`These Terms and Conditions shall be governed by and construed in accordance with applicable laws, without regard to conflict of law principles. Any disputes arising out of or related to these terms shall be subject to the exclusive jurisdiction of the courts in an appropriate venue as determined by MRCS Aid.`}
+            </span>
+          </div>
+
+          <div className="px-8 py-4 flex flex-col ">
+            <span className="text-2xl font-medium font-sans py-2 text-emerald-500">
+              12. Contact Information
+            </span>
+            <span className="text-lg font-small font-sans ">
+              {`If you have any questions about these Terms and Conditions, please contact us at contact@mrcsaid.com.`}
             </span>
           </div>
         </div>
