@@ -1,7 +1,5 @@
 import Cookie from "js-cookie";
-import { hero } from "../assets";
 import { Helmet } from "react-helmet";
-import { Button } from "@mui/material";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import { API } from "../config/axiosConfig";
