@@ -149,8 +149,8 @@ const Dashboard = () => {
     <Fragment>
       <Helmet>
         <title>
-          S Part A Exam Preparation | Comprehensive Resources and Study Guides -
-          mrcsaid.com
+          MRCS Part A Exam Preparation | Comprehensive Resources and Study
+          Guides - mrcsaid.com
         </title>
 
         <meta
@@ -165,7 +165,7 @@ const Dashboard = () => {
             slider.status === "active" ? (
               <div
                 key={i + 1}
-                className="bg-white rounded-lg justify-center items-center  p-5 flex flex-col w-full shadow-sm  "
+                className="bg-white rounded-lg justify-center items-center  p-[5px] md:p-5 flex flex-col w-full shadow-sm  "
               >
                 {slider?.imageUrl && (
                   <div className="h-auto  w-full top-0 ">
@@ -336,7 +336,7 @@ const Dashboard = () => {
             Candidate's Feedback
           </span>
 
-          {userType !== "paid" && !loginUserReview && (
+          {userType === "paid" && !loginUserReview && (
             // <div className="w-full">
             <button
               className="w-[230px] h-[40px] bg-red-600 text-white rounded-full font-bold font-[Roboto, Helvetica, Arial, sans-serif] hover:bg-red-500"
