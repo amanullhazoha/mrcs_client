@@ -21,7 +21,9 @@ const MainLayout = ({ children }) => {
               backgroundSize: "fill",
             }}
           >
-            <div className="mx-auto px-5 py-5 min flex flex-col min-h-screen">{children}</div>
+            <div className="mx-auto px-5 py-5 min flex flex-col min-h-screen">
+              {children}
+            </div>
             <footer className="bg-emerald-50 mt-auto">
               <div className="flex justify-center items-center py-2">
                 <span>© All Rights Reserved by MRCS AID 2024</span>
