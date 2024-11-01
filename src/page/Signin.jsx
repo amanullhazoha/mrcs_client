@@ -291,10 +291,11 @@ const Signin = () => {
                         component="p"
                         className="mt-2 text-sm text-red-600"
                       />
+
                       <Link to="/forgotpassword">
-                        <p className="pt-3 text-blue-400 hover:text-blue-700">
-                          Forgot Password?
-                        </p>
+                        <span className="pt-3 text-blue-400 hover:text-blue-700">
+                          {"Forgot Password?"}
+                        </span>
                       </Link>
                     </div>
                   </div>
